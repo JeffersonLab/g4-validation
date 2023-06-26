@@ -1,0 +1,6 @@
+/run/initialize
+#
+# Run Default kinemtics, print log every n events
+/run/printProgress 10
+/run/beamOn 30
+

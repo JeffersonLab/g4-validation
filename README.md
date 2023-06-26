@@ -1,2 +1,1 @@
-# g4-validation
-validation suite for JLab physics
+# Validation suite for physics at JLab's regime
