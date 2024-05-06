@@ -5,7 +5,7 @@
 #include "SteppingAction.hh"
 #include "DetectorConstruction.hh"
 
-namespace pim_absorption {
+namespace rga {
 
     ActionInitialization::ActionInitialization(DetectorConstruction *detConstruction) :
             G4VUserActionInitialization(),

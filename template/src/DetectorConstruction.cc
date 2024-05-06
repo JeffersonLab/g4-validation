@@ -8,9 +8,9 @@
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 
-namespace pim_absorption {
+namespace template_project_name {
 
-    DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction(){}
+    DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction() {}
 
     DetectorConstruction::~DetectorConstruction() {}
 

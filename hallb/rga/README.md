@@ -1,6 +1,6 @@
 ## RGA Test
 
-The RGA experiment is 
+The RGA experiment has a 5 cm long LH2 target. The beam is 
 
 ## Geometry
 

@@ -5,7 +5,7 @@
 #include "G4ParticleTable.hh"
 #include "G4SystemOfUnits.hh"
 
-namespace pim_absorption {
+namespace rga {
 
     PrimaryGeneratorAction::PrimaryGeneratorAction()
             : G4VUserPrimaryGeneratorAction(),
@@ -40,4 +40,3 @@ namespace pim_absorption {
     }
 
 }
-

@@ -6,7 +6,7 @@
 // geant4
 #include "G4RunManager.hh"
 
-namespace pim_absorption {
+namespace template_project_name {
 
     SteppingAction::SteppingAction(const DetectorConstruction *detectorConstruction, EventAction *eventAction)
             : G4UserSteppingAction(),

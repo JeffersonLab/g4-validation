@@ -2,7 +2,7 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 3.16...3.21)
+cmake_minimum_required(VERSION 3.16...3.30)
 project(project_name)
 
 #----------------------------------------------------------------------------
@@ -34,8 +34,8 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/../..
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(project_name project_name.cc ${sources} ${headers})
-target_link_libraries(project_name ${Geant4_LIBRARIES})
+add_executable(rga rga.cc ${sources} ${headers})
+target_link_libraries(rga ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -76,4 +76,4 @@ message(STATUS "C++ compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERS
 message(STATUS "")
 
 
-install(TARGETS project_name DESTINATION bin)
+install(TARGETS rga DESTINATION bin)

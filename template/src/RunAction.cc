@@ -6,8 +6,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4AnalysisManager.hh"
 
-namespace pim_absorption {
-
+namespace template_project_name {
 
     RunAction::RunAction() : G4UserRunAction() {
         // Create analysis manager

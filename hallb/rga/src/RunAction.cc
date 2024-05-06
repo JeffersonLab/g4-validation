@@ -6,7 +6,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4AnalysisManager.hh"
 
-namespace pim_absorption {
+namespace rga {
 
 
     RunAction::RunAction() : G4UserRunAction() {

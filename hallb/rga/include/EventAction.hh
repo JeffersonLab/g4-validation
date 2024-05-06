@@ -8,7 +8,7 @@
 // geant4
 #include "G4UserEventAction.hh"
 
-namespace pim_absorption {
+namespace rga {
 
     class EventAction : public G4UserEventAction {
     public:
@@ -31,5 +31,3 @@ namespace pim_absorption {
     };
 }
 #endif
-
-

@@ -4,7 +4,7 @@
 // geant4
 #include "G4UserRunAction.hh"
 
-namespace pim_absorption {
+namespace rga {
 
     class RunAction : public G4UserRunAction {
     public:
@@ -20,4 +20,3 @@ namespace pim_absorption {
 }
 
 #endif
-

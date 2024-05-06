@@ -8,9 +8,9 @@
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 
-namespace pim_absorption {
+namespace rga {
 
-    DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction(){}
+    DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction() {}
 
     DetectorConstruction::~DetectorConstruction() {}
 
@@ -41,8 +41,7 @@ namespace pim_absorption {
                                   true);                 // overlaps checking
 
 
-        G4Material *vacuumMaterial = nist->FindOrBuildMaterial("G4_Galactic");
-        G4Material *aluminumMaterial = nist->FindOrBuildMaterial("G4_Al");
+        //G4Material *vacuumMaterial = nist->FindOrBuildMaterial("G4_Galactic");
 
         return physWorld;
     }

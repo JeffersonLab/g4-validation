@@ -3,10 +3,12 @@
 
 // geant4
 #include "G4VUserPrimaryGeneratorAction.hh"
+
 class G4ParticleGun;
+
 class G4Event;
 
-namespace pim_absorption {
+namespace template_project_name {
 
     class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
     public:

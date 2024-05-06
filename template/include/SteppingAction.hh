@@ -5,25 +5,26 @@
 
 class G4LogicalVolume;
 
-namespace pim_absorption {
+namespace template_project_name {
 
-class DetectorConstruction;
-class EventAction;
+    class DetectorConstruction;
 
-class SteppingAction : public G4UserSteppingAction
-{
-public:
-	SteppingAction(const DetectorConstruction* detectorConstruction,
-						EventAction* eventAction);
-	virtual ~SteppingAction() override;
+    class EventAction;
 
-	virtual void UserSteppingAction(const G4Step* step) override;
+    class SteppingAction : public G4UserSteppingAction {
+    public:
+        SteppingAction(const DetectorConstruction *detectorConstruction,
+                       EventAction *eventAction);
 
-private:
-	const DetectorConstruction* fDetConstruction = nullptr;
-	EventAction*  fEventAction;
+        virtual ~SteppingAction() override;
 
-};
+        virtual void UserSteppingAction(const G4Step *step) override;
+
+    private:
+        const DetectorConstruction *fDetConstruction = nullptr;
+        EventAction *fEventAction;
+
+    };
 
 }
 #endif

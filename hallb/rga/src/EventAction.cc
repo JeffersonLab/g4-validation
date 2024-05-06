@@ -7,7 +7,7 @@
 // c++
 using namespace std;
 
-namespace pim_absorption {
+namespace rga {
 
     EventAction::EventAction() : G4UserEventAction() {}
 

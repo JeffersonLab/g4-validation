@@ -7,7 +7,7 @@
 // c++
 using namespace std;
 
-namespace pim_absorption {
+namespace template_project_name {
 
     EventAction::EventAction() : G4UserEventAction() {}
 

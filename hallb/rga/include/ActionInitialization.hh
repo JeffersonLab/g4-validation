@@ -4,7 +4,7 @@
 // geant4
 #include "G4VUserActionInitialization.hh"
 
-namespace pim_absorption {
+namespace rga {
 
     class DetectorConstruction;
 
@@ -24,5 +24,3 @@ namespace pim_absorption {
 
 }
 #endif
-
-

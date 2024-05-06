@@ -6,25 +6,24 @@
 
 class G4VPhysicalVolume;
 
-namespace pim_absorption {
+namespace template_project_name {
 
     class DetectorConstruction : public G4VUserDetectorConstruction {
 
     public:
         DetectorConstruction();
+
         virtual ~DetectorConstruction() override;
 
     public:
         virtual G4VPhysicalVolume *Construct() override;
 
     public:
-        inline const G4VPhysicalVolume* getVacuumDetectorPV() const { return vacuumDetectorPV; }
+        inline const G4VPhysicalVolume *getVacuumDetectorPV() const { return vacuumDetectorPV; }
 
 
     private:
-        G4VPhysicalVolume* vacuumDetectorPV = nullptr; // the scoring volume
-
-
+        G4VPhysicalVolume *vacuumDetectorPV = nullptr; // the scoring volume
 
 
     };
@@ -33,4 +32,3 @@ namespace pim_absorption {
 }
 
 #endif
-
