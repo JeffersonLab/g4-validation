@@ -6,19 +6,12 @@
 // physics
 #include "extPhysics.hh"
 
-// geant4 physics
-//#include "G4PhysListFactory.hh"
-
 // geant4
 #include "G4RunManagerFactory.hh"
 #include "G4SteppingVerbose.hh"
 #include "G4UIExecutive.hh"
 #include "G4UIcommand.hh"
-//#include "G4UImanager.hh"
-//#include "G4StepLimiterPhysics.hh"
-//#include "Randomize.hh"
 #include "G4VisExecutive.hh"
-//#include "G4ChargeExchangePhysics.hh"
 
 using namespace std;
 

@@ -6,20 +6,12 @@
 // modular physics
 #include "extPhysics.hh"
 
-// geant4 physics
-//#include "G4PhysListFactory.hh"
-
 // geant4
 #include "G4RunManagerFactory.hh"
 #include "G4SteppingVerbose.hh"
 #include "G4UIExecutive.hh"
 #include "G4UIcommand.hh"
-#include "G4UImanager.hh"
-#include "G4StepLimiterPhysics.hh"
-#include "Randomize.hh"
 #include "G4VisExecutive.hh"
-
-//#include "G4ChargeExchangePhysics.hh"
 
 using namespace std;
 
@@ -50,6 +42,7 @@ namespace template_project_name {
 
 
 int main(int argc, char **argv) {
+
     G4String macro;
     G4String session;
     G4int nThreads = 4;
@@ -58,7 +51,6 @@ int main(int argc, char **argv) {
 
     string physListString = "FTFP_BERT";
     bool printAvailablePhysics = false;
-
 
     for (G4int i = 1; i < argc; i = i + 2) {
         G4String g4argv(argv[i]);
@@ -77,10 +69,10 @@ int main(int argc, char **argv) {
             verboseBestUnits = false;
             --i;  // this option is not followed with a parameter
         } else if (g4argv == "-h" || g4argv == "--help") {
-            PrintUsage();
+            template_project_name::PrintUsage();
             return 1;
         } else {
-            PrintUsage();
+            template_project_name::PrintUsage();
             return 1;
         }
     }

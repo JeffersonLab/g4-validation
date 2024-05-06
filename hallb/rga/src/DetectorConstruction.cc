@@ -1,4 +1,3 @@
-
 #include "DetectorConstruction.hh"
 
 #include "G4Box.hh"
@@ -20,14 +19,14 @@ namespace rga {
 
         // World Envelope parameters
         G4double env_sizeXY = 500 * cm, env_sizeZ = 500 * cm;
-        G4Material *env_mat = nist->FindOrBuildMaterial("G4_Galactic");
+        G4Material *vacuumMaterial = nist->FindOrBuildMaterial("G4_Galactic");
 
         G4Box *solidWorld = new G4Box("World",                       // name
                                       0.5 * env_sizeXY, 0.5 * env_sizeXY, 0.5 * env_sizeZ);    // size
 
         G4LogicalVolume *logicWorld =
                 new G4LogicalVolume(solidWorld,          // solid
-                                    env_mat,             // material
+                                    vacuumMaterial,      // material
                                     "World");            // name
 
         G4VPhysicalVolume *physWorld =
@@ -39,9 +38,6 @@ namespace rga {
                                   false,                 // no boolean operation
                                   0,                     // copy number
                                   true);                 // overlaps checking
-
-
-        //G4Material *vacuumMaterial = nist->FindOrBuildMaterial("G4_Galactic");
 
         return physWorld;
     }
