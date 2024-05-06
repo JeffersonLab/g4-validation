@@ -1,11 +1,14 @@
 #include "DetectorConstruction.hh"
 
+// geant4
 #include "G4Box.hh"
 #include "G4Tubs.hh"
+#include "G4Polycone.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4NistManager.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
+#include "G4VisAttributes.hh"
 
 namespace rga {
 
@@ -18,7 +21,7 @@ namespace rga {
         G4NistManager *nist = G4NistManager::Instance();
 
         // World Envelope parameters
-        G4double env_sizeXY = 500 * cm, env_sizeZ = 500 * cm;
+        G4double env_sizeXY = 20 * cm, env_sizeZ = 20 * cm;
         G4Material *vacuumMaterial = nist->FindOrBuildMaterial("G4_Galactic");
 
         G4Box *solidWorld = new G4Box("World",                       // name
@@ -38,6 +41,74 @@ namespace rga {
                                   false,                 // no boolean operation
                                   0,                     // copy number
                                   true);                 // overlaps checking
+
+        // aluminum windows
+        G4Material *aluminumMaterial = nist->FindOrBuildMaterial("G4_Al");
+        G4VisAttributes *aluminumAtt = new G4VisAttributes(G4Colour(0.0, 1.0, 1.0));
+
+        G4Tubs *aluminumWindow =
+                new G4Tubs("aluminumWindow",                                      // name
+                           0 * mm, 4.9 * mm, 0.015 * mm, 0 * deg, 360 * deg);   // size
+
+        G4LogicalVolume *aluminumWindowLogical =
+                new G4LogicalVolume(aluminumWindow,           // solid
+                                    aluminumMaterial,      // material
+                                    "aluminumWindowLogical"); // name
+
+        aluminumWindowLogical->SetVisAttributes(aluminumAtt);
+        aluminumAtt->SetForceSolid(true);
+
+
+        new G4PVPlacement(0,                               // no rotation
+                          G4ThreeVector(0, 0, -25 * mm),   // at -2.5 mm
+                          aluminumWindowLogical,           // logical volume
+                          "aluminumWindow",                // name
+                          logicWorld,                      // mother volume
+                          false,                           // no boolean operation
+                          0,                               // copy number
+                          true);                           // overlaps checking
+
+        new G4PVPlacement(0,                               // no rotation
+                          G4ThreeVector(0, 0, 25 * mm),    // at -2.5 mm
+                          aluminumWindowLogical,           // logical volume
+                          "aluminumWindow",                // name
+                          logicWorld,                      // mother volume
+                          false,                           // no boolean operation
+                          0,                               // copy number
+                          true);                           // overlaps checking
+
+        // target cell
+        G4Material *lh2_material = nist->FindOrBuildMaterial("G4_lH2");
+        const int n_planes = 5;
+        G4double inner_radius[n_planes] = {0.0 * mm, 0.0 * mm, 0.0 * mm, 0.0 * mm, 0.0 * mm};
+        G4double outer_radius[n_planes] = {2.5 * mm, 10.3 * mm, 7.3 * mm, 5 * mm, 2.5 * mm};
+        G4double z_pos[n_planes] = {-24.2 * mm, -21.2 * mm, 22.5 * mm, 23.5 * mm, 24.5 * mm};
+
+        G4Polycone *target_cell =
+                new G4Polycone("target_cell",              // name
+                               0.0 * deg, 360 * deg, 5,    // phi and number of planes
+                               z_pos,                      // z pos
+                               inner_radius,               // inner radius
+                               outer_radius);              // outer radius
+
+
+        G4LogicalVolume *target_cell_logical =
+                new G4LogicalVolume(target_cell,           // solid
+                                    lh2_material,           // material
+                                    "target_cell_logical");  // name
+
+        G4VisAttributes *target_cell_att = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0));
+        target_cell_logical->SetVisAttributes(target_cell_att);
+        target_cell_att->SetForceSolid(true);
+
+        new G4PVPlacement(0,                           // no rotation
+                          G4ThreeVector(),             // at (0,0,0)
+                          target_cell_logical,         // logical volume
+                          "target_cell",               // name
+                          logicWorld,                  // mother volume
+                          false,                       // no boolean operation
+                          0,                           // copy number
+                          true);                       // overlaps checking
 
         return physWorld;
     }
