@@ -38,7 +38,7 @@ namespace rga {
         G4int numberOfBeamElectrons = 10000;
         G4double beam_spot_size_x = 1.5 * mm;
         G4double beam_spot_size_y = 1.5 * mm;
-        G4double z0 = -201. * cm;
+        G4double z0 = -10. * cm;
 
         for (G4int i = 0; i < numberOfBeamElectrons; i++) {
 

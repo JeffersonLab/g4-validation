@@ -124,7 +124,7 @@ int main(int argc, char **argv) {
         UImanager->ApplyCommand(command + macro);
     } else {
         // interactive mode : define UI session
-        // assuming the existance of init_vis and gui
+        // assuming the existence of init_vis and gui
         UImanager->ApplyCommand("/control/execute init_vis.mac");
         ui->SessionStart();
         delete ui;

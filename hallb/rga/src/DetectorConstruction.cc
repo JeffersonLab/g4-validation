@@ -10,6 +10,9 @@
 #include "G4PVPlacement.hh"
 #include "G4VisAttributes.hh"
 
+// cadmesh
+#include "CadMesh.hh"
+
 namespace rga {
 
     DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction() {}
@@ -21,7 +24,7 @@ namespace rga {
         G4NistManager *nist = G4NistManager::Instance();
 
         // World Envelope parameters
-        G4double env_sizeXY = 20 * cm, env_sizeZ = 20 * cm;
+        G4double env_sizeXY = 40 * cm, env_sizeZ = 40 * cm;
         G4Material *vacuumMaterial = nist->FindOrBuildMaterial("G4_Galactic");
 
         G4Box *solidWorld = new G4Box("World",                       // name
@@ -101,6 +104,10 @@ namespace rga {
         target_cell_logical->SetVisAttributes(target_cell_att);
         target_cell_att->SetForceSolid(true);
 
+        // refine matrix of rotation, 180 degrees around y axis
+        G4RotationMatrix *rot = new G4RotationMatrix();
+        rot->rotateY(180 * deg);
+
         new G4PVPlacement(0,                           // no rotation
                           G4ThreeVector(),             // at (0,0,0)
                           target_cell_logical,         // logical volume
@@ -110,6 +117,50 @@ namespace rga {
                           0,                           // copy number
                           true);                       // overlaps checking
 
+        // CADMesh *mesh = new CADMesh("target_torlon_base.stl");
+        auto target_torlon_base_mesh = CADMesh::TessellatedMesh::FromSTL("target_torlon_base.stl");
+        target_torlon_base_mesh->SetScale(mm);
+        target_torlon_base_mesh->SetReverse(false);
+
+        auto target_kapton_wall_mesh = CADMesh::TessellatedMesh::FromSTL("target_kapton_wall.stl");
+        target_kapton_wall_mesh->SetScale(mm);
+        target_kapton_wall_mesh->SetReverse(false);
+
+        G4LogicalVolume *target_torlon_base_logical =
+                new G4LogicalVolume(target_torlon_base_mesh->GetSolid(),  // solid
+                                    lh2_material,                         // material
+                                    "target_torlon_base_logical");        // name
+
+        G4LogicalVolume *target_kapton_wall_logical =
+                new G4LogicalVolume(target_kapton_wall_mesh->GetSolid(),  // solid
+                                    lh2_material,                         // material
+                                    "target_kapton_wall_logical");        // name
+
+        G4VisAttributes *torlon_att = new G4VisAttributes(G4Colour(0.2, 0.2, 0.2));
+        torlon_att->SetForceSolid(true);
+
+        target_torlon_base_logical->SetVisAttributes(torlon_att);
+        target_kapton_wall_logical->SetVisAttributes(torlon_att);
+      //  target_kapton_wall_logical->SetForceSolid(true);
+
+
+        new G4PVPlacement(rot,                                  // no rotation
+                          G4ThreeVector(0, 0, 1273.27 * mm), //mesh coordinates
+                          target_torlon_base_logical,         // logical volume
+                          "target_torlon_base",               // name
+                          logicWorld,                         // mother volume
+                          false,                              // no boolean operation
+                          0,                                  // copy number
+                          true);                              // overlaps checking
+
+        new G4PVPlacement(rot,                                  // no rotation
+                          G4ThreeVector(0, 0, 1273.27 * mm), //mesh coordinates
+                          target_kapton_wall_logical,         // logical volume
+                          "target_kapton_wall",               // name
+                          logicWorld,                         // mother volume
+                          false,                              // no boolean operation
+                          0,                                  // copy number
+                          true);                              // overlaps checking
         return physWorld;
     }
 
