@@ -43,3 +43,7 @@
 
 /vis/viewer/addCutawayPlane
 /vis/geometry/set/forceCloud target_cell_logical
+
+# cyan background color
+/vis/viewer/set/background 0.9 1.0 1.0 1.0
+  /vis/touchable/set/numberOfCloudPoints 10000

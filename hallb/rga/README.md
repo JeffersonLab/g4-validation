@@ -1,11 +1,19 @@
 ## RGA Test
 
-The RGA experiment has a 5 cm long LH2 target. The beam is 
+The RGA experiment has a 5 cm long LH2 target. The beam is 11GeV electron.
+
 
 ## Geometry
 
-A G4_Galactic tube encompass a beam dump made of aluminum.
-In the stepping action, calls to the event action fill the ntuple when the step is in the scoring tube.
+The target cell is a 5 cm long cylinder with a 2 cm diameter. 
+The target is placed in the center of the world volume. 
+
+Two 50 um aluminum windows are placed at the entrance and exit of the target cell.
+
+A torlon tube is placed before the cell and a torlon polycone simulate the cell walls.
+
+
+![RGA](rga_description.png)
 
 
 ## Compilation
@@ -18,7 +26,8 @@ With 4 cores (modify accordingly):
 
 ## Physics List
 
-The example uses the geant4 extensible physics list. The default is FTFP_BERT.
+The example uses the geant4 extensible physics list, defined in the common source code at the root of this repo. 
+The default is FTFP_BERT.
 The option -p physList can be used to select alternative physics modules and constructors.
 
 For example:
@@ -37,10 +46,6 @@ To print all geant4 available physics modules and constructors use the -pap opti
 
 ### - Batch mode:
 
-`./pim_absorption -m run.mac`
+`./rga`
 
 ## ROOT Analysis:
-
-The following root macro counts the number of neutrinos:
-
-root neutrinos_histo.C

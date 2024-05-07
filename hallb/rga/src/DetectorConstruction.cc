@@ -100,7 +100,7 @@ namespace rga {
                                     lh2_material,           // material
                                     "target_cell_logical");  // name
 
-        G4VisAttributes *target_cell_att = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0));
+        G4VisAttributes *target_cell_att = new G4VisAttributes(G4Colour(1.0, 0.8, 0.8));
         target_cell_logical->SetVisAttributes(target_cell_att);
         target_cell_att->SetForceSolid(true);
 
@@ -136,12 +136,11 @@ namespace rga {
                                     lh2_material,                         // material
                                     "target_kapton_wall_logical");        // name
 
-        G4VisAttributes *torlon_att = new G4VisAttributes(G4Colour(0.2, 0.2, 0.2));
+        G4VisAttributes *torlon_att = new G4VisAttributes(G4Colour(0.4, 0.4, 0.4));
         torlon_att->SetForceSolid(true);
 
         target_torlon_base_logical->SetVisAttributes(torlon_att);
         target_kapton_wall_logical->SetVisAttributes(torlon_att);
-      //  target_kapton_wall_logical->SetForceSolid(true);
 
 
         new G4PVPlacement(rot,                                  // no rotation
