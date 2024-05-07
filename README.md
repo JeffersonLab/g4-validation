@@ -1,5 +1,10 @@
 # Validation suite for physics at JLab's regime
 
+The idea is to collect target / beam conditions of our experiments and check particle 
+rates / cross sections of what comes out.
+
+The various setups are meant to be Geant4 standalone tests, to be added later in geant4-validation 
+
 
 ### Common sources for the geant4 extensible physics list
 
