@@ -3,7 +3,7 @@
 #include "DetectorConstruction.hh"
 #include "ActionInitialization.hh"
 
-// physics
+// modular physics
 #include "extPhysics.hh"
 
 // geant4

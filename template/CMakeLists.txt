@@ -21,15 +21,16 @@ endif()
 # Setup Geant4 include directories and compile definitions
 # Setup include directory for this project
 # Assuming common headers and sources are 2 directories up
+# Also adding one dir up for the template to compile - this assumes 2 dirs up do not contain any 'src' or 'include' dirs
 include(${Geant4_USE_FILE})
-include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/../../include)
+include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/../../include ${PROJECT_SOURCE_DIR}/../include)
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 # Assuming common headers and sources are 2 directories up
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc     ${PROJECT_SOURCE_DIR}/../../src/*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/../../include/*.hh)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc     ${PROJECT_SOURCE_DIR}/../../src/*.cc      ${PROJECT_SOURCE_DIR}/../src/*.cc)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/../../include/*.hh  ${PROJECT_SOURCE_DIR}/../include/*.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries

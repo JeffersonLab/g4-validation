@@ -15,6 +15,9 @@
 
 namespace rga {
 
+    G4ThreadLocal MagneticField* DetectorConstruction::fMagneticField = nullptr;
+    G4ThreadLocal G4FieldManager* DetectorConstruction::fFieldMgr = nullptr;
+
     DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction() {}
 
     DetectorConstruction::~DetectorConstruction() {}
@@ -35,6 +38,9 @@ namespace rga {
                                     vacuumMaterial,      // material
                                     "World");            // name
 
+        // keeping log volume for magnetic field
+        fMagneticLogical = logicWorld;
+
         G4VPhysicalVolume *physWorld =
                 new G4PVPlacement(0,                     // no rotation
                                   G4ThreeVector(),       // at (0,0,0)
@@ -47,10 +53,9 @@ namespace rga {
 
         // aluminum windows
         G4Material *aluminumMaterial = nist->FindOrBuildMaterial("G4_Al");
-        G4VisAttributes *aluminumAtt = new G4VisAttributes(G4Colour(0.0, 1.0, 1.0));
 
         G4Tubs *aluminumWindow =
-                new G4Tubs("aluminumWindow",                                      // name
+                new G4Tubs("aluminumWindow",                                    // name
                            0 * mm, 4.9 * mm, 0.015 * mm, 0 * deg, 360 * deg);   // size
 
         G4LogicalVolume *aluminumWindowLogical =
@@ -58,6 +63,7 @@ namespace rga {
                                     aluminumMaterial,      // material
                                     "aluminumWindowLogical"); // name
 
+        G4VisAttributes *aluminumAtt = new G4VisAttributes(G4Colour(0.0, 1.0, 1.0));
         aluminumWindowLogical->SetVisAttributes(aluminumAtt);
         aluminumAtt->SetForceSolid(true);
 
@@ -96,8 +102,8 @@ namespace rga {
 
 
         G4LogicalVolume *target_cell_logical =
-                new G4LogicalVolume(target_cell,           // solid
-                                    lh2_material,           // material
+                new G4LogicalVolume(target_cell,             // solid
+                                    lh2_material,            // material
                                     "target_cell_logical");  // name
 
         G4VisAttributes *target_cell_att = new G4VisAttributes(G4Colour(1.0, 0.8, 0.8));
@@ -161,6 +167,20 @@ namespace rga {
                           0,                                  // copy number
                           true);                              // overlaps checking
         return physWorld;
+    }
+
+    void DetectorConstruction::ConstructSDandField()
+    {
+        // sensitive detectors
+
+
+        // magnetic field ----------------------------------------------------------
+        fMagneticField = new MagneticField();
+        fFieldMgr = new G4FieldManager();
+        fFieldMgr->SetDetectorField(fMagneticField);
+        fFieldMgr->CreateChordFinder(fMagneticField);
+        G4bool forceToAllDaughters = true;
+        fMagneticLogical->SetFieldManager(fFieldMgr, forceToAllDaughters);
     }
 
 }

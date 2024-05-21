@@ -19,10 +19,6 @@ namespace template_project_name {
 
         auto volume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
 
-        auto vacuumDetectorPV = fDetConstruction->getVacuumDetectorPV();
-
-        if (volume != vacuumDetectorPV) return;
-
         auto thisTrack = step->GetTrack();
         int trkID = thisTrack->GetTrackID();
         int PDGE = thisTrack->GetDefinition()->GetPDGEncoding();

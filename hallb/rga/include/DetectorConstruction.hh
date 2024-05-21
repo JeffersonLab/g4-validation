@@ -3,8 +3,8 @@
 
 // geant4
 #include "G4VUserDetectorConstruction.hh"
-
-class G4VPhysicalVolume;
+#include "G4FieldManager.hh"
+#include "MagneticField.hh"
 
 namespace rga {
 
@@ -17,13 +17,12 @@ namespace rga {
 
     public:
         virtual G4VPhysicalVolume *Construct() override;
-
-    public:
-        inline const G4VPhysicalVolume *getVacuumDetectorPV() const { return vacuumDetectorPV; }
-
+        virtual void ConstructSDandField() override;
 
     private:
-        G4VPhysicalVolume *vacuumDetectorPV = nullptr; // the scoring volume
+        G4LogicalVolume* fMagneticLogical = nullptr;
+        static G4ThreadLocal MagneticField* fMagneticField;
+        static G4ThreadLocal G4FieldManager* fFieldMgr;
 
     };
 
