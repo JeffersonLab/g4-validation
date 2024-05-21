@@ -25,13 +25,7 @@ namespace rga {
         double KE = thisTrack->GetKineticEnergy();
         int mpid = thisTrack->GetParentID();
 
-
-        if (mpid != 0) {
-
-//		if (fabs(PDGE) == 12 || fabs(PDGE) == 14 ) {
-//			std::cout << "SSS trackID: " << trkID << ", PDGE: " << PDGE << ", kine: " << KE << std::endl;
-//		}
-
+        if (mpid != 99 ) {
             fEventAction->AddPid(trkID, PDGE);
             fEventAction->AddKine(trkID, KE);
         }

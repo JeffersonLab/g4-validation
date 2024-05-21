@@ -31,9 +31,6 @@ namespace template_project_name {
             analysisManager->FillNtupleDColumn(0, pid);
             analysisManager->FillNtupleDColumn(1, kine);
 
-//		if (fabs(pid) == 12 || fabs(pid) == 14 ) {
-//			cout << "EEE trackID: " << trkID << ", pid: " << pid << ", kine: " << kine << endl;
-//		}
             analysisManager->AddNtupleRow();
 
         }

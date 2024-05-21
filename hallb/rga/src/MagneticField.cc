@@ -13,7 +13,8 @@ namespace rga {
     void MagneticField::GetFieldValue(const G4double [4], double *bField) const {
         bField[0] = 0.;
         bField[1] = 0.;
-        bField[2] = z_value;
+        bField[2] = 0.;
+        //bField[2] = z_value;
     }
 
 }
