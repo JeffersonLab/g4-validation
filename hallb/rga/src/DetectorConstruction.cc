@@ -106,7 +106,7 @@ namespace rga {
                                     lh2_material,            // material
                                     "target_cell_logical");  // name
 
-        G4VisAttributes *target_cell_att = new G4VisAttributes(G4Colour(1.0, 0.8, 0.8));
+        G4VisAttributes *target_cell_att = new G4VisAttributes(G4Colour(1.0, 0.0, 0.0));
         target_cell_logical->SetVisAttributes(target_cell_att);
         target_cell_att->SetForceSolid(true);
 

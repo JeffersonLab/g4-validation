@@ -14,7 +14,7 @@ namespace rga {
         bField[0] = 0.;
         bField[1] = 0.;
         bField[2] = 0.;
-        //bField[2] = z_value;
+        bField[2] = z_value;
     }
 
 }
