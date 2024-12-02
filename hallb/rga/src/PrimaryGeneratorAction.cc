@@ -51,7 +51,6 @@ namespace rga {
             fParticleGun->SetParticlePosition(G4ThreeVector(x0, y0, z0));
 
             fParticleGun->GeneratePrimaryVertex(anEvent);
-
         }
     }
 

@@ -28,7 +28,7 @@ GPhysics::GPhysics(bool printAll, string physListString) : physList(nullptr) {
 
 	if ( printAll ) {
 		printAvailable();
-		exit(1);
+		exit(0);
 	}
 	
 	// g4alt::G4PhysListFactoryAlt is the extensible factory
@@ -48,7 +48,6 @@ GPhysics::GPhysics(bool printAll, string physListString) : physList(nullptr) {
 
 GPhysics::~GPhysics() {}
 
-
 // calls PrintAvailablePhysLists
 // if verbosity is > 0 calls PrintAvailablePhysicsConstructors
 void GPhysics::printAvailable() {
@@ -60,7 +59,3 @@ void GPhysics::printAvailable() {
 	G4PhysicsConstructorRegistry* g4pctorFactory = G4PhysicsConstructorRegistry::Instance();
 	g4pctorFactory->PrintAvailablePhysicsConstructors();
 }
-
-
-
-

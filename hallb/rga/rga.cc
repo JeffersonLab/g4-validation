@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 
     G4String macro;
     G4String session;
-    G4int nThreads = 4;
+    G4int nThreads = 0;
     G4int verbosity = 0;
     G4bool verboseBestUnits = true;
 
@@ -61,10 +61,10 @@ int main(int argc, char **argv) {
             nThreads = G4UIcommand::ConvertToInt(argv[i + 1]);
         } else if (g4argv == "-v" || g4argv == "--verbose") {
             ++verbosity;  // verbose flag doesn't take an argument
-            --i;         // don't increment argc by two, just the one
-        } else if (g4argv == "-pap" || g4argv == "--printAvailablePnysics") {
+            --i;  // this option is not followed with a parameter
+        } else if (g4argv == "-pap" || g4argv == "--printAvailablePhysics") {
             printAvailablePhysics = true;
-            --i;         // don't increment argc by two, just the one
+            --i;  // this option is not followed with a parameter
         } else if (G4String(argv[i]) == "-vDefault") {
             verboseBestUnits = false;
             --i;  // this option is not followed with a parameter
@@ -96,6 +96,9 @@ int main(int argc, char **argv) {
     auto runManager = G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
     if (nThreads > 0) {
         runManager->SetNumberOfThreads(nThreads);
+    } else {
+        int allThreads = G4Threading::G4GetNumberOfCores();
+        runManager->SetNumberOfThreads(allThreads);
     }
 
     // Set mandatory initialization classes

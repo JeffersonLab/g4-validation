@@ -11,11 +11,11 @@ project(project_name)
 # to build a batch mode only executable
 #
 option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
-if(WITH_GEANT4_UIVIS)
-  find_package(Geant4 REQUIRED ui_all vis_all)
-else()
-  find_package(Geant4 REQUIRED)
-endif()
+if (WITH_GEANT4_UIVIS)
+    find_package(Geant4 REQUIRED ui_all vis_all)
+else ()
+    find_package(Geant4 REQUIRED)
+endif ()
 
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
@@ -28,7 +28,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/../../in
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 # Assuming common headers and sources are 2 directories up
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc     ${PROJECT_SOURCE_DIR}/../../src/*.cc)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc ${PROJECT_SOURCE_DIR}/../../src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/../../include/*.hh)
 
 #----------------------------------------------------------------------------
@@ -43,25 +43,27 @@ target_link_libraries(rga ${Geant4_LIBRARIES})
 # relies on these scripts being in the current working directory.
 #
 set(FILES_TO_COPY
-  run.mac
-  init_vis.mac
-  vis.mac
-  )
+        run.mac
+        init_vis.mac
+        vis.mac
+        target_kapton_wall.stl
+        target_torlon_base.stl
+)
 
-foreach(_script ${FILES_TO_COPY})
-  configure_file(
-    ${PROJECT_SOURCE_DIR}/${_script}
-    ${PROJECT_BINARY_DIR}/${_script}
-    COPYONLY
+foreach (_script ${FILES_TO_COPY})
+    configure_file(
+            ${PROJECT_SOURCE_DIR}/${_script}
+            ${PROJECT_BINARY_DIR}/${_script}
+            COPYONLY
     )
-endforeach()
+endforeach ()
 
 # for some reason this is not added to the cflags
 # but in the examples it it. Investigate more.
 set(G4CONFIG "$ENV{G4INSTALL}/bin/geant4-config")
-execute_process (
-    COMMAND ${G4CONFIG} --cflags
-    OUTPUT_VARIABLE G4CFLAGS
+execute_process(
+        COMMAND ${G4CONFIG} --cflags
+        OUTPUT_VARIABLE G4CFLAGS
 )
 string(STRIP ${G4CFLAGS} G4CFLAGS)
 set(CMAKE_CXX_FLAGS " ${G4CFLAGS} ${CMAKE_CXX_FLAGS}")
@@ -71,7 +73,7 @@ set(CMAKE_CXX_FLAGS " ${G4CFLAGS} ${CMAKE_CXX_FLAGS}")
 #
 message(STATUS "")
 message(STATUS "CMAKE_BUILD_TYPE: " ${CMAKE_BUILD_TYPE})
-message(STATUS "CMAKE_CXX_FLAGS: "  ${CMAKE_CXX_FLAGS})
+message(STATUS "CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS})
 message(STATUS "C++ compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
 message(STATUS "")
 

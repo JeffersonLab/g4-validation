@@ -18,10 +18,12 @@ A torlon tube is placed before the cell and a torlon polycone simulate the cell 
 
 ## Compilation
 
-With 4 cores (modify accordingly):
+With 4 cores (modify accordingly), using rga as the build directory:
 
- - cmake .
- - make -j4
+- mkdir rga
+- cd rga
+- cmake <path to geant4 rga source code>
+- make -j4
 
 
 ## Physics List
@@ -31,7 +33,6 @@ The default is FTFP_BERT.
 The option -p physList can be used to select alternative physics modules and constructors.
 
 For example:
-
 
 `-p FTFP_BERT_EMX`  would replace the standard e.m. physics with G4EmStandardPhysics_option3
 
@@ -46,7 +47,8 @@ To print all geant4 available physics modules and constructors use the -pap opti
 
 ### - Batch mode:
 
-`./rga`
+`./rga -m run.mac`
+
 
 
 # TODO
