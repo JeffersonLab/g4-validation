@@ -25,6 +25,7 @@ namespace rga {
         void AddKine(int trkID, double kine);
 
     private:
+
         // key is track id
         std::map<int, int> pids;
         std::map<int, double> kines;

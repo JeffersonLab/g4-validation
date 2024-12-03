@@ -18,7 +18,6 @@ namespace rga {
         SetUserAction(new RunAction);
     }
 
-
     void ActionInitialization::Build() const {
         SetUserAction(new PrimaryGeneratorAction);
         SetUserAction(new RunAction);

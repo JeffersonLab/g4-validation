@@ -24,10 +24,10 @@ namespace rga {
 
         for (auto pidsMapIndex: pids) {
 
-            int trkID = pidsMapIndex.first;
-            int pid = pidsMapIndex.second;
-            int kine = kines[trkID];
-
+//            int trkID = pidsMapIndex.first;
+//            int pid = pidsMapIndex.second;
+//            int kine = kines[trkID];
+//
 //            analysisManager->FillNtupleDColumn(0, pid);
 //            analysisManager->FillNtupleDColumn(1, kine);
 //            analysisManager->AddNtupleRow();

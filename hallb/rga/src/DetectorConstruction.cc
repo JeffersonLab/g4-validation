@@ -15,8 +15,12 @@
 
 namespace rga {
 
-    G4ThreadLocal MagneticField* DetectorConstruction::fMagneticField = nullptr;
-    G4ThreadLocal G4FieldManager* DetectorConstruction::fFieldMgr = nullptr;
+    G4ThreadLocal MagneticField
+    *
+    DetectorConstruction::fMagneticField = nullptr;
+    G4ThreadLocal G4FieldManager
+    *
+    DetectorConstruction::fFieldMgr = nullptr;
 
     DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction() {}
 
@@ -169,8 +173,7 @@ namespace rga {
         return physWorld;
     }
 
-    void DetectorConstruction::ConstructSDandField()
-    {
+    void DetectorConstruction::ConstructSDandField() {
         // sensitive detectors
 
 

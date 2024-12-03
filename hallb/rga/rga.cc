@@ -47,7 +47,6 @@ int main(int argc, char **argv) {
     G4String session;
     G4int nThreads = 0;
     G4int verbosity = 0;
-    G4bool verboseBestUnits = true;
 
     string physListString = "FTFP_BERT";
     bool printAvailablePhysics = false;
@@ -64,9 +63,6 @@ int main(int argc, char **argv) {
             --i;  // this option is not followed with a parameter
         } else if (g4argv == "-pap" || g4argv == "--printAvailablePhysics") {
             printAvailablePhysics = true;
-            --i;  // this option is not followed with a parameter
-        } else if (G4String(argv[i]) == "-vDefault") {
-            verboseBestUnits = false;
             --i;  // this option is not followed with a parameter
         } else if (g4argv == "-h" || g4argv == "--help") {
             rga::PrintUsage();
@@ -87,10 +83,9 @@ int main(int argc, char **argv) {
     // G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
     // Use G4SteppingVerboseWithUnits
-    if (verboseBestUnits) {
-        G4int precision = 8;
-        G4SteppingVerbose::UseBestUnit(precision);
-    }
+    G4int precision = 4;
+    G4SteppingVerbose::UseBestUnit(precision);
+
 
     // Construct the default run manager
     auto runManager = G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);

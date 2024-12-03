@@ -52,10 +52,3 @@ To print all geant4 available physics modules and constructors use the -pap opti
 
 
 # TODO
-
-- add 5T magnetic field
-- add scoring of particles
-- add ROOT analysis macros
-- add automatic output (tabulature?) of geant4 cross sections for all relevant processes
-- create result dedicated page
-- collect CLAS12 cross sections for comparison

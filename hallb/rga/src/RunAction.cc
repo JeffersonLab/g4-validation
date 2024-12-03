@@ -32,7 +32,7 @@ namespace rga {
         G4cout << "Using " << analysisManager->GetType() << " analysisManager type " << G4endl;
 
         // Book histograms
-        analysisManager->CreateH2("elasticXS", "Elastic Cross Section", 12000, 0, 12000, 100, 0., 1);   // id 0: - elastic cross section
+        analysisManager->CreateH2("elasticXS", "Elastic Cross Section", 12000, 0, 12000, 100, 0., 1);   // id 0: - elastic cross section. This is empty for some reason.
         analysisManager->CreateH2("inelasticXS", "Inelastic Cross Section", 12000, 0, 12000, 100, 0., 31); // id 1: - inelastic cross section
 
         // Book ntuple
@@ -56,33 +56,34 @@ namespace rga {
         // print histogram statistics
 
         if (isMaster) {
-            auto analysisManager = G4AnalysisManager::Instance();
-
-            G4HadronicProcessStore *hadstore = G4HadronicProcessStore::Instance();
-            G4Material *lh2Mat = G4NistManager::Instance()->FindOrBuildMaterial("G4_lH2");
-            const G4Element *element = lh2Mat->GetElement(0);
-
-            for (int i = 0; i < 1200; i++) {
-                G4double energy = i * 10 * MeV;
-                G4double elXS = hadstore->GetElasticCrossSectionPerAtom(G4Electron::Electron(), energy, element, lh2Mat);
-                G4double InelXS = hadstore->GetInelasticCrossSectionPerAtom(G4Electron::Electron(), energy, element, lh2Mat);
-
-                analysisManager->FillH2(0, i*10, elXS/microbarn);
-                analysisManager->FillH2(1, i*10, InelXS/microbarn);
-
-                // G4cout << "InelXS 10 GeV p on Pb " << G4BestUnit(elXS, "Surface") << G4endl;
-
-
-//                analysisManager->FillNtupleDColumn(0, InelXS);
-//                analysisManager->FillNtupleDColumn(1, InelXS);
-//                analysisManager->FillNtupleDColumn(2, InelXS);
-//                analysisManager->AddNtupleRow();
+//            auto analysisManager = G4AnalysisManager::Instance();
 //
-//                // save histograms & ntuple
-
-            }
-            analysisManager->Write();
-            analysisManager->CloseFile();
+//            G4HadronicProcessStore *hadstore = G4HadronicProcessStore::Instance();
+//            G4Material *lh2Mat = G4NistManager::Instance()->FindOrBuildMaterial("G4_lH2");
+//            const G4Element *element = lh2Mat->GetElement(0);
+//
+//            for (int i = 0; i < 1200; i++) {
+//                G4double energy = i * 10 * MeV;
+//                G4double elXS = hadstore->GetElasticCrossSectionPerAtom(G4Electron::Electron(), energy, element, lh2Mat);
+//                G4double InelXS = hadstore->GetInelasticCrossSectionPerAtom(G4Electron::Electron(), energy, element, lh2Mat);
+//
+//                analysisManager->FillH2(0, i*10, elXS/microbarn);
+//                analysisManager->FillH2(1, i*10, InelXS/microbarn);
+//
+//                 G4cout << " elasticXS: " << elXS/microbarn << " inelasticXS: " << InelXS/microbarn << G4endl;
+//
+//
+////                analysisManager->FillNtupleDColumn(0, InelXS);
+////                analysisManager->FillNtupleDColumn(1, InelXS);
+////                analysisManager->FillNtupleDColumn(2, InelXS);
+////                analysisManager->AddNtupleRow();
+////
+////                // save histograms & ntuple
+//
+//            }
+//
+//            analysisManager->Write();
+//            analysisManager->CloseFile();
 
         }
 

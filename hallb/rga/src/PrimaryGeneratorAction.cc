@@ -35,7 +35,7 @@ namespace rga {
 
     void PrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 
-        G4int numberOfBeamElectrons = 1000;
+        G4int numberOfBeamElectrons = 1;
         G4double beam_spot_size_x = 1.5 * mm;
         G4double beam_spot_size_y = 1.5 * mm;
         G4double z0 = -10. * cm;

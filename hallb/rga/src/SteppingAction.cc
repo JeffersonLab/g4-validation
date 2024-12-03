@@ -25,7 +25,7 @@ namespace rga {
         double KE = thisTrack->GetKineticEnergy();
         int mpid = thisTrack->GetParentID();
 
-        if (mpid != 99 ) {
+        if (mpid != 99) {
             fEventAction->AddPid(trkID, PDGE);
             fEventAction->AddKine(trkID, KE);
         }
