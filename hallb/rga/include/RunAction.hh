@@ -1,21 +1,28 @@
 #ifndef RunAction_h
 #define RunAction_h 1
 
+// rga
+#include "EventAction.hh"
+
 // geant4
 #include "G4UserRunAction.hh"
 
 namespace rga {
 
-    class RunAction : public G4UserRunAction {
-    public:
-        RunAction();
+class RunAction : public G4UserRunAction {
+public:
+    RunAction(EventAction *eventAction);
 
-        virtual ~RunAction();
+    ~RunAction() override = default;
 
-        virtual void BeginOfRunAction(const G4Run *);
+    void BeginOfRunAction(const G4Run *) override;
 
-        virtual void EndOfRunAction(const G4Run *);
-    };
+    void EndOfRunAction(const G4Run *) override;
+
+private:
+    EventAction *fEventAction = nullptr;
+
+};
 
 }
 

@@ -17,45 +17,63 @@ using std::endl;
 namespace rga {
 
 
-    RunAction::RunAction() : G4UserRunAction() {
-        // Create analysis manager
-        // The choice of analysis technology is done via selectin of a namespace in Analysis.hh
-        auto analysisManager = G4AnalysisManager::Instance();
-        analysisManager->SetVerboseLevel(1);
-        // Note: merging ntuples is available only with Root output
-        analysisManager->SetNtupleMerging(true);
+RunAction::RunAction(EventAction *eventAction)
+        : fEventAction(eventAction) {    // Create analysis manager
+    // The choice of analysis technology is done via selectin of a namespace in Analysis.hh
+    auto analysisManager = G4AnalysisManager::Instance();
+    analysisManager->SetDefaultFileType("root");
+    analysisManager->SetVerboseLevel(1);
 
+    // Note: merging ntuples is available only with Root output
+    analysisManager->SetNtupleMerging(true);
 
-        // Open an output file
-        G4String fileName = "rga.root";               // file opening command moved to the class constructor
-        analysisManager->OpenFile(fileName);
-        G4cout << "Using " << analysisManager->GetType() << " analysisManager type " << G4endl;
+    // Open an output file
+    G4String experiment = "rga";
+    G4String fileName = experiment + ".root";
+    G4String fileName_ntuple = experiment + "_ntuple.root";
 
-        // Book histograms
-        analysisManager->CreateH2("elasticXS", "Elastic Cross Section", 12000, 0, 12000, 100, 0., 1);   // id 0: - elastic cross section. This is empty for some reason.
-        analysisManager->CreateH2("inelasticXS", "Inelastic Cross Section", 12000, 0, 12000, 100, 0., 31); // id 1: - inelastic cross section
+    analysisManager->SetFileName(fileName);
+    G4cout << "Using " << analysisManager->GetType() << " analysisManager type " << G4endl;
 
-        // Book ntuple
+    // Book histograms
+    analysisManager->CreateH2("elasticXS", "Elastic Cross Section", 12000, 0, 12000, 100, 0., 1);       // id 0: - elastic cross section. This is empty for some reason.
+    analysisManager->CreateH2("inelasticXS", "Inelastic Cross Section", 12000, 0, 12000, 100, 0., 31); // id 1: - inelastic cross section
+
+    // Book ntuple
+    if (fEventAction) {
         analysisManager->CreateNtuple("rga", "rga physics validation");
         analysisManager->CreateNtupleDColumn("pid");
         analysisManager->CreateNtupleDColumn("kine");
         analysisManager->CreateNtupleDColumn("elastic");
         analysisManager->FinishNtuple();
-
     }
 
-    RunAction::~RunAction() {
-    }
+    // Set ntuple output file
+    analysisManager->SetNtupleFileName(0, fileName_ntuple);
 
-    void RunAction::BeginOfRunAction(const G4Run * /*run*/) {
-    }
+}
 
 
-    void RunAction::EndOfRunAction(const G4Run * /*run*/) {
+void RunAction::BeginOfRunAction(const G4Run * /*run*/) {
 
-        // print histogram statistics
+    // Get analysis manager
+    auto analysisManager = G4AnalysisManager::Instance();
 
-        if (isMaster) {
+    // Reset histograms from previous run
+    analysisManager->Reset();
+
+    // Open an output file
+    // The default file name is set in RunAction::RunAction(),
+    // it can be overwritten in a macro
+    analysisManager->OpenFile();
+}
+
+
+void RunAction::EndOfRunAction(const G4Run * /*run*/) {
+
+    // print histogram statistics
+
+ //   if (isMaster) {
 //            auto analysisManager = G4AnalysisManager::Instance();
 //
 //            G4HadronicProcessStore *hadstore = G4HadronicProcessStore::Instance();
@@ -85,10 +103,13 @@ namespace rga {
 //            analysisManager->Write();
 //            analysisManager->CloseFile();
 
-        }
+//   }
 
+    auto analysisManager = G4AnalysisManager::Instance();
+    analysisManager->Write();
+    analysisManager->CloseFile(false);
 
-    }
+}
 
 
 }

@@ -10,25 +10,25 @@
 
 namespace rga {
 
-    class EventAction : public G4UserEventAction {
-    public:
-        EventAction();
+class EventAction : public G4UserEventAction {
+public:
+    EventAction();
 
-        virtual ~EventAction();
+    ~EventAction() override = default;
 
-        virtual void BeginOfEventAction(const G4Event *event);
+    void BeginOfEventAction(const G4Event *event) override;
 
-        virtual void EndOfEventAction(const G4Event *event);
+    void EndOfEventAction(const G4Event *event) override;
 
-        void AddPid(int trkID, int pid);
+    void AddPid(int trkID, int pid);
 
-        void AddKine(int trkID, double kine);
+    void AddKine(int trkID, double kine);
 
-    private:
+private:
 
-        // key is track id
-        std::map<int, int> pids;
-        std::map<int, double> kines;
-    };
+    // key is track id
+    std::map<int, int> pids;
+    std::map<int, double> kines;
+};
 }
 #endif

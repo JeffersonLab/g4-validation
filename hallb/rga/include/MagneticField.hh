@@ -7,18 +7,20 @@
 // derived from B5, but w/o the messenger
 namespace rga {
 
-    class MagneticField : public G4MagneticField {
-    public:
+class MagneticField : public G4MagneticField {
+public:
 
-        MagneticField();
-        ~MagneticField() override;
+    MagneticField();
 
-        void GetFieldValue(const G4double point[4], double *bField) const override;
+    ~MagneticField() override;
 
-    private:
-        void DefineCommands();
-        G4double z_value = 5.0 * CLHEP::tesla;
-    };
+    void GetFieldValue(const G4double point[4], double *bField) const override;
+
+private:
+    void DefineCommands();
+
+    G4double z_value = 5.0 * CLHEP::tesla;
+};
 
 }
 

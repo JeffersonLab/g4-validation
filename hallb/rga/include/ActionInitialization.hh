@@ -6,21 +6,21 @@
 
 namespace rga {
 
-    class DetectorConstruction;
+class DetectorConstruction;
 
-    class ActionInitialization : public G4VUserActionInitialization {
-    public:
-        ActionInitialization(DetectorConstruction *);
+class ActionInitialization : public G4VUserActionInitialization {
+public:
+    ActionInitialization(DetectorConstruction *detConstruction);
 
-        virtual ~ActionInitialization();
+    ~ActionInitialization() override = default;  // fDetConstruction is not owned by this class
 
-        virtual void BuildForMaster() const;
+    void BuildForMaster() const override;
 
-        virtual void Build() const;
+    void Build() const override;
 
-    private:
-        DetectorConstruction *fDetConstruction;
-    };
+private:
+    DetectorConstruction *fDetConstruction;
+};
 
 }
 #endif

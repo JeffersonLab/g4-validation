@@ -7,23 +7,24 @@
 
 namespace rga {
 
-    ActionInitialization::ActionInitialization(DetectorConstruction *detConstruction) :
-            G4VUserActionInitialization(),
-            fDetConstruction(detConstruction) {}
-
-    ActionInitialization::~ActionInitialization() {}
+ActionInitialization::ActionInitialization(DetectorConstruction *detConstruction) :
+        G4VUserActionInitialization(),
+        fDetConstruction(detConstruction) {}
 
 
-    void ActionInitialization::BuildForMaster() const {
-        SetUserAction(new RunAction);
-    }
+void ActionInitialization::BuildForMaster() const {
+    auto eventAction = new EventAction;
+    SetUserAction(new RunAction(eventAction));
+}
 
-    void ActionInitialization::Build() const {
-        SetUserAction(new PrimaryGeneratorAction);
-        SetUserAction(new RunAction);
-        auto eventAction = new EventAction;
-        SetUserAction(eventAction);
-        SetUserAction(new SteppingAction(fDetConstruction, eventAction));
-    }
+void ActionInitialization::Build() const {
+    SetUserAction(new PrimaryGeneratorAction);
+
+    auto eventAction = new EventAction;
+    SetUserAction(eventAction);
+
+    SetUserAction(new RunAction(eventAction));
+    SetUserAction(new SteppingAction(fDetConstruction, eventAction));
+}
 
 }

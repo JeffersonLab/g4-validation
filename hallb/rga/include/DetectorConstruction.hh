@@ -8,23 +8,25 @@
 
 namespace rga {
 
-    class DetectorConstruction : public G4VUserDetectorConstruction {
+class MagneticField;
 
-    public:
-        DetectorConstruction();
+class DetectorConstruction : public G4VUserDetectorConstruction {
 
-        virtual ~DetectorConstruction() override;
+public:
+    DetectorConstruction();
 
-    public:
-        virtual G4VPhysicalVolume *Construct() override;
-        virtual void ConstructSDandField() override;
+    ~DetectorConstruction() override;
 
-    private:
-        G4LogicalVolume* fMagneticLogical = nullptr;
-        static G4ThreadLocal MagneticField* fMagneticField;
-        static G4ThreadLocal G4FieldManager* fFieldMgr;
+public:
+    G4VPhysicalVolume* Construct() override;
+    void ConstructSDandField() override;
 
-    };
+private:
+    G4LogicalVolume *fMagneticLogical = nullptr;
+    static G4ThreadLocal MagneticField* fMagneticField;
+    static G4ThreadLocal G4FieldManager* fFieldMgr;
+
+};
 
 
 }
