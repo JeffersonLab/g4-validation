@@ -26,6 +26,7 @@ private:
     static G4ThreadLocal MagneticField* fMagneticField;
     static G4ThreadLocal G4FieldManager* fFieldMgr;
 
+    G4LogicalVolume *sensitive_sphere_logical = nullptr;
 };
 
 

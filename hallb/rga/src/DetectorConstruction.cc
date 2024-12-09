@@ -1,22 +1,28 @@
 #include "DetectorConstruction.hh"
-
+#include "fluxSD.hh"
 // geant4
 #include "G4Box.hh"
 #include "G4Tubs.hh"
+#include "G4Sphere.hh"
 #include "G4Polycone.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4NistManager.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PVPlacement.hh"
 #include "G4VisAttributes.hh"
+#include "G4SDManager.hh"
 
 // cadmesh
 #include "CadMesh.hh"
 
 namespace rga {
 
-G4ThreadLocal MagneticField* DetectorConstruction::fMagneticField = nullptr;
-G4ThreadLocal G4FieldManager* DetectorConstruction::fFieldMgr = nullptr;
+G4ThreadLocal MagneticField
+*
+DetectorConstruction::fMagneticField = nullptr;
+G4ThreadLocal G4FieldManager
+*
+DetectorConstruction::fFieldMgr = nullptr;
 
 DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction() {}
 
@@ -149,6 +155,27 @@ G4VPhysicalVolume *DetectorConstruction::Construct() {
     target_kapton_wall_logical->SetVisAttributes(torlon_att);
 
 
+    // add a solid sphere surrounding the target
+    G4Sphere *sensitive_sphere_solid = new G4Sphere("target_sphere", 10 * cm, 10.5 * cm, 0, 360 * deg, 0, 360 * deg);
+
+    sensitive_sphere_logical =
+            new G4LogicalVolume(sensitive_sphere_solid,     // solid
+                                aluminumMaterial,              // material
+                                "sensitive_sphere_logical"); // name
+
+    G4VisAttributes *sensitive_sphere_att = new G4VisAttributes(G4Colour(0.0, 1.0, 0.0));
+    sensitive_sphere_att->SetForceSolid(true);
+    sensitive_sphere_logical->SetVisAttributes(sensitive_sphere_att);
+
+    new G4PVPlacement(0,                           // no rotation
+                      G4ThreeVector(),             // at (0,0,0)
+                      sensitive_sphere_logical,     // logical volume
+                      "sensitive_sphere",           // name
+                      logicWorld,                   // mother volume
+                      false,                        // no boolean operation
+                      0,                            // copy number
+                      true);                        // overlaps checking
+
     new G4PVPlacement(rot,                                  // no rotation
                       G4ThreeVector(0, 0, 1273.27 * mm), //mesh coordinates
                       target_torlon_base_logical,         // logical volume
@@ -170,8 +197,13 @@ G4VPhysicalVolume *DetectorConstruction::Construct() {
 }
 
 void DetectorConstruction::ConstructSDandField() {
+
     // sensitive detectors
 
+    auto sdManager = G4SDManager::GetSDMpointer();
+    auto fluxSD = new Flux_SD("fluxSD");
+    sdManager->AddNewDetector(fluxSD);
+    sensitive_sphere_logical->SetSensitiveDetector(fluxSD);
 
     // magnetic field ----------------------------------------------------------
     fMagneticField = new MagneticField();
