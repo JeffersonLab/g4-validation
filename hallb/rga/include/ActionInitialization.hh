@@ -10,7 +10,7 @@ class DetectorConstruction;
 
 class ActionInitialization : public G4VUserActionInitialization {
 public:
-    ActionInitialization(DetectorConstruction *detConstruction);
+    ActionInitialization() = default;
 
     ~ActionInitialization() override = default;  // fDetConstruction is not owned by this class
 
@@ -18,8 +18,6 @@ public:
 
     void Build() const override;
 
-private:
-    DetectorConstruction *fDetConstruction;
 };
 
 }

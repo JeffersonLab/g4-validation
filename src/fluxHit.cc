@@ -8,6 +8,7 @@
 G4ThreadLocal G4Allocator<FluxHit>* FluxHitHitAllocator;
 
 G4bool FluxHit::operator==(const FluxHit &right) const {
+    return false;
     return time == right.time &&
            fWorldPos == right.fWorldPos &&
            pid == right.pid &&
@@ -16,10 +17,8 @@ G4bool FluxHit::operator==(const FluxHit &right) const {
 
 
 void FluxHit::Draw() {
+
     auto visManager = G4VVisManager::GetConcreteInstance();
-
-    G4cout << "Drawing hit at " << fWorldPos << G4endl;
-
     if (!visManager) return;
 
     G4Circle circle(fWorldPos);
@@ -28,8 +27,6 @@ void FluxHit::Draw() {
     G4VisAttributes attribs(G4Colour::Yellow());
     circle.SetVisAttributes(attribs);
     visManager->Draw(circle);
-
-    Print();
 }
 
 void FluxHit::Print() {

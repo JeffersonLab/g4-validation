@@ -19,37 +19,39 @@ namespace rga {
 
 RunAction::RunAction(EventAction *eventAction)
         : fEventAction(eventAction) {    // Create analysis manager
+
+
     // The choice of analysis technology is done via selectin of a namespace in Analysis.hh
-    auto analysisManager = G4AnalysisManager::Instance();
-    analysisManager->SetDefaultFileType("root");
-    analysisManager->SetVerboseLevel(1);
-
-    // Note: merging ntuples is available only with Root output
-    analysisManager->SetNtupleMerging(true);
-
-    // Open an output file
-    G4String experiment = "rga";
-    G4String fileName = experiment + ".root";
-    G4String fileName_ntuple = experiment + "_ntuple.root";
-
-    analysisManager->SetFileName(fileName);
-    G4cout << "Using " << analysisManager->GetType() << " analysisManager type " << G4endl;
-
-    // Book histograms
-    analysisManager->CreateH2("elasticXS", "Elastic Cross Section", 12000, 0, 12000, 100, 0., 1);       // id 0: - elastic cross section. This is empty for some reason.
-    analysisManager->CreateH2("inelasticXS", "Inelastic Cross Section", 12000, 0, 12000, 100, 0., 31); // id 1: - inelastic cross section
-
-    // Book ntuple
-    if (fEventAction) {
-        analysisManager->CreateNtuple("rga", "rga physics validation");
-        analysisManager->CreateNtupleDColumn("pid");
-        analysisManager->CreateNtupleDColumn("kine");
-        analysisManager->CreateNtupleDColumn("elastic");
-        analysisManager->FinishNtuple();
-    }
-
-    // Set ntuple output file
-    analysisManager->SetNtupleFileName(0, fileName_ntuple);
+//    auto analysisManager = G4AnalysisManager::Instance();
+//    analysisManager->SetDefaultFileType("root");
+//    analysisManager->SetVerboseLevel(1);
+//
+//    // Note: merging ntuples is available only with Root output
+//    analysisManager->SetNtupleMerging(true);
+//
+//    // Open an output file
+//    G4String experiment = "rga";
+//    G4String fileName = experiment + ".root";
+//    G4String fileName_ntuple = experiment + "_ntuple.root";
+//
+//    analysisManager->SetFileName(fileName);
+//    G4cout << "Using " << analysisManager->GetType() << " analysisManager type " << G4endl;
+//
+//    // Book histograms
+//    analysisManager->CreateH2("elasticXS", "Elastic Cross Section", 12000, 0, 12000, 100, 0., 1);       // id 0: - elastic cross section. This is empty for some reason.
+//    analysisManager->CreateH2("inelasticXS", "Inelastic Cross Section", 12000, 0, 12000, 100, 0., 31); // id 1: - inelastic cross section
+//
+//    // Book ntuple
+//    if (fEventAction) {
+//        analysisManager->CreateNtuple("rga", "rga physics validation");
+//        analysisManager->CreateNtupleDColumn("pid");
+//        analysisManager->CreateNtupleDColumn("kine");
+//        analysisManager->CreateNtupleDColumn("elastic");
+//        analysisManager->FinishNtuple();
+//    }
+//
+//    // Set ntuple output file
+//    analysisManager->SetNtupleFileName(0, fileName_ntuple);
 
 }
 
@@ -57,15 +59,15 @@ RunAction::RunAction(EventAction *eventAction)
 void RunAction::BeginOfRunAction(const G4Run * /*run*/) {
 
     // Get analysis manager
-    auto analysisManager = G4AnalysisManager::Instance();
-
-    // Reset histograms from previous run
-    analysisManager->Reset();
-
-    // Open an output file
-    // The default file name is set in RunAction::RunAction(),
-    // it can be overwritten in a macro
-    analysisManager->OpenFile();
+//    auto analysisManager = G4AnalysisManager::Instance();
+//
+//    // Reset histograms from previous run
+//    analysisManager->Reset();
+//
+//    // Open an output file
+//    // The default file name is set in RunAction::RunAction(),
+//    // it can be overwritten in a macro
+//    analysisManager->OpenFile();
 }
 
 
@@ -105,9 +107,9 @@ void RunAction::EndOfRunAction(const G4Run * /*run*/) {
 
 //   }
 
-    auto analysisManager = G4AnalysisManager::Instance();
-    analysisManager->Write();
-    analysisManager->CloseFile(false);
+//    auto analysisManager = G4AnalysisManager::Instance();
+//    analysisManager->Write();
+//    analysisManager->CloseFile(false);
 
 }
 

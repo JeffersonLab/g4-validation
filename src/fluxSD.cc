@@ -7,13 +7,13 @@ Flux_SD::Flux_SD(G4String name) : G4VSensitiveDetector(name) {
     collectionName.insert("fluxColl");
 }
 
-void Flux_SD::Initialize(G4HCofThisEvent *HCE) {
+void Flux_SD::Initialize(G4HCofThisEvent *hce) {
     fHitsCollection = new FluxHitsCollection(SensitiveDetectorName, collectionName[0]);
 
     if (fHCID < 0) {
         fHCID = G4SDManager::GetSDMpointer()->GetCollectionID(fHitsCollection);
     }
-    HCE->AddHitsCollection(fHCID, fHitsCollection);
+    hce->AddHitsCollection(fHCID, fHitsCollection);
 }
 
 G4bool Flux_SD::ProcessHits(G4Step *step, G4TouchableHistory *) {
@@ -26,11 +26,10 @@ G4bool Flux_SD::ProcessHits(G4Step *step, G4TouchableHistory *) {
     auto momentum = preStepPoint->GetMomentum();
 
     auto hit = new FluxHit();
-    hit->SetWorldPos(worldPos);
-    hit->SetTime(time);
-    hit->SetParticleID(pid);
-    hit->SetMomentum(momentum);
-
+    hit->setWorldPos(worldPos);
+    hit->setTime(time);
+    hit->setParticleID(pid);
+    hit->setMomentum(momentum);
     fHitsCollection->insert(hit);
 
     return true;

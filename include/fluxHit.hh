@@ -8,7 +8,7 @@
 
 class FluxHit : public G4VHit {
 public:
-    FluxHit() = default;
+    FluxHit() { ; }
 
     ~FluxHit() override = default;
 
@@ -24,21 +24,21 @@ public:
 
     void Print() override;
 
-    void SetWorldPos(G4ThreeVector xyz) { fWorldPos = xyz; }
+    void setWorldPos(G4ThreeVector xyz) { fWorldPos = xyz; }
 
-    G4ThreeVector GetWorldPos() const { return fWorldPos; }
+    G4ThreeVector getWorldPos() const { return fWorldPos; }
 
-    void SetTime(double t) { time = t; }
+    void setTime(double t) { time = t; }
 
-    double GetTime() const { return time; }
+    double getTime() const { return time; }
 
-    void SetParticleID(int id) { pid = id; }
+    void setParticleID(int id) { pid = id; }
 
-    int GetParticleID() const { return pid; }
+    int getParticleID() const { return pid; }
 
-    void SetMomentum(G4ThreeVector p) { momentum = p; }
+    void setMomentum(G4ThreeVector p) { momentum = p; }
 
-    G4ThreeVector GetMomentum() const { return momentum; }
+    G4ThreeVector getMomentum() const { return momentum; }
 
 private:
 

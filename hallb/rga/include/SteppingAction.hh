@@ -7,24 +7,22 @@ class G4LogicalVolume;
 
 namespace rga {
 
-    class DetectorConstruction;
 
-    class EventAction;
+class SteppingAction : public G4UserSteppingAction {
+public:
+    SteppingAction() = default;
 
-    class SteppingAction : public G4UserSteppingAction {
-    public:
-        SteppingAction(const DetectorConstruction *detectorConstruction,
-                       EventAction *eventAction);
+    ~SteppingAction() override = default;
 
-        virtual ~SteppingAction() override;
+    void UserSteppingAction(const G4Step *step) override;
 
-        virtual void UserSteppingAction(const G4Step *step) override;
+private:
 
-    private:
-        const DetectorConstruction *fDetConstruction = nullptr;
-        EventAction *fEventAction;
+    double max_x_pos = 110;
+    double max_y_pos = 110;
+    double max_z_pos = 110;
 
-    };
+};
 
 }
 #endif

@@ -8,28 +8,29 @@
 
 namespace rga {
 
-    SteppingAction::SteppingAction(const DetectorConstruction *detectorConstruction, EventAction *eventAction)
-            : G4UserSteppingAction(),
-              fDetConstruction(detectorConstruction),
-              fEventAction(eventAction) {}
 
-    SteppingAction::~SteppingAction() {}
 
-    void SteppingAction::UserSteppingAction(const G4Step *step) {
 
-        auto volume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume();
+void SteppingAction::UserSteppingAction(const G4Step *step) {
 
-        auto thisTrack = step->GetTrack();
-        int trkID = thisTrack->GetTrackID();
-        int PDGE = thisTrack->GetDefinition()->GetPDGEncoding();
-        double KE = thisTrack->GetKineticEnergy();
-        int mpid = thisTrack->GetParentID();
+    G4ThreeVector   pos   = step->GetPostStepPoint()->GetPosition();      ///< Global Coordinates of interaction
+    G4Track*        track = step->GetTrack();
 
-        if (mpid != 99) {
-            fEventAction->AddPid(trkID, PDGE);
-            fEventAction->AddKine(trkID, KE);
-        }
+    if(fabs(pos.x()) > max_x_pos ||
+       fabs(pos.y()) > max_y_pos ||
+       fabs(pos.z()) > max_z_pos ) {
 
+//		std::cout << " Out of limits reached for track " << track->GetDefinition()->GetParticleName() ;
+//        std::cout << " Track killed" << std::endl;
+
+        track->SetTrackStatus(fStopAndKill);   ///< Killing track if outside of interest region
     }
+
+    // sometimes a track get stuck into a magnetic field infinite loop
+    if(track->GetCurrentStepNumber() > 1000) {
+ //       std::cout << " GetCurrentStepNumber " << track->GetCurrentStepNumber() << std::endl;
+        track->SetTrackStatus(fStopAndKill);
+    }
+}
 
 }

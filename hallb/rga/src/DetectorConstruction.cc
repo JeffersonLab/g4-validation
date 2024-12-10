@@ -156,11 +156,11 @@ G4VPhysicalVolume *DetectorConstruction::Construct() {
 
 
     // add a solid sphere surrounding the target
-    G4Sphere *sensitive_sphere_solid = new G4Sphere("target_sphere", 10 * cm, 10.5 * cm, 0, 360 * deg, 0, 360 * deg);
+    G4Sphere *sensitive_sphere_solid = new G4Sphere("target_sphere", 10 * cm, 10.01 * cm, 0, 360 * deg, 0, 360 * deg);
 
     sensitive_sphere_logical =
-            new G4LogicalVolume(sensitive_sphere_solid,     // solid
-                                aluminumMaterial,              // material
+            new G4LogicalVolume(sensitive_sphere_solid,      // solid
+                                vacuumMaterial,              // material
                                 "sensitive_sphere_logical"); // name
 
     G4VisAttributes *sensitive_sphere_att = new G4VisAttributes(G4Colour(0.0, 1.0, 0.0));

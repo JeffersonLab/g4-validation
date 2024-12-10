@@ -15,9 +15,9 @@ public:
 
     ~RunAction() override = default;
 
-    void BeginOfRunAction(const G4Run *) override;
+    void BeginOfRunAction(const G4Run*) override;
 
-    void EndOfRunAction(const G4Run *) override;
+    void EndOfRunAction(const G4Run*) override;
 
 private:
     EventAction *fEventAction = nullptr;

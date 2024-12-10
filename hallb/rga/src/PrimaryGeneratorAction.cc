@@ -15,7 +15,6 @@ PrimaryGeneratorAction::PrimaryGeneratorAction()
     G4int n_particle = 1;
     G4double beam_energy = 11. * GeV;
 
-
     fParticleGun = new G4ParticleGun(n_particle);
 
     // default particle kinematic
@@ -35,10 +34,11 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction() {
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 
-    G4int numberOfBeamElectrons = 100;
-    G4double beam_spot_size_x = 1.5 * mm;
-    G4double beam_spot_size_y = 1.5 * mm;
-    G4double z0 = -10. * cm;
+    G4int numberOfBeamElectrons = 100000;
+
+    G4double beam_spot_size_x = 0.15 * mm;
+    G4double beam_spot_size_y = 0.15 * mm;
+    G4double z0 = -3. * cm;
 
     for (G4int i = 0; i < numberOfBeamElectrons; i++) {
 

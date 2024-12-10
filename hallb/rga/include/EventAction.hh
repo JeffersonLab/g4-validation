@@ -20,15 +20,10 @@ public:
 
     void EndOfEventAction(const G4Event *event) override;
 
-    void AddPid(int trkID, int pid);
-
-    void AddKine(int trkID, double kine);
 
 private:
 
-    // key is track id
-    std::map<int, int> pids;
-    std::map<int, double> kines;
+
 };
 }
 #endif

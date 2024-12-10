@@ -17,26 +17,27 @@ using namespace std;
 
 namespace rga {
 
-    void PrintUsage() {
+void PrintUsage() {
 
-        G4cerr << G4endl;
-        G4cerr << " Usage: " << G4endl;
-        G4cerr << G4endl;
-        G4cerr
-                << "  rga [-m macro ] [-u UIsession] [-t nThreads] [-p physList ]  [-v | --verbose ] [-h | --help] [ -pap | --printAvailablePhysics ]"
-                << G4endl;
-        G4cerr << G4endl;
-        G4cerr << " The default physList is FTFP_BERT. " << G4endl;
-        G4cerr << " It can be replaced by any of the available physics modules and compounded with additional physics constructors. " << G4endl;
-        G4cerr << " For example: " << G4endl;
-        G4cerr << G4endl;
-        G4cerr << "  -p FTFP_BERT_EMX  would replace the standard e.m. physics with G4EmStandardPhysics_option3" << G4endl;
-        G4cerr << "  -p QGSP_BERT+G4OpticalPhysics would use QGSP_BERT and G4OpticalPhysics" << G4endl;
-        G4cerr << "  -p QGSP_FTFP_BERT+G4RadioactiveDecayPhysics+G4OpticalPhysics would use QGSP_FTFP_BERT, G4RadioactiveDecayPhysics and G4OpticalPhysics"
-               << G4endl;
-        G4cerr << G4endl;
-        G4cerr << " To print all geant4 available physics modules and constructors use the -pap option " << G4endl;
-    }
+    G4cerr << G4endl;
+    G4cerr << " Usage: " << G4endl;
+    G4cerr << G4endl;
+    G4cerr
+            << "  rga [-b batch_macro ] [-u UIsession ] [-t nThreads] [-p physList ] [-h | --help] [ -pap | --printAvailablePhysics ]"
+            << G4endl;
+    G4cerr << G4endl;
+    G4cerr << "  > The default number of threads is equal to the number of availabile CPU cores. " << G4endl;
+    G4cerr << "  > The default physList is \"FTFP_BERT\". " << G4endl;
+    G4cerr << "    It can be replaced by any of the available physics modules and compounded with additional physics constructors. " << G4endl;
+    G4cerr << "    For example: " << G4endl;
+    G4cerr << G4endl;
+    G4cerr << "     -p FTFP_BERT_EMX  would replace the standard e.m. physics with G4EmStandardPhysics_option3" << G4endl;
+    G4cerr << "     -p QGSP_BERT+G4OpticalPhysics would use QGSP_BERT and G4OpticalPhysics" << G4endl;
+    G4cerr << "     -p QGSP_FTFP_BERT+G4RadioactiveDecayPhysics+G4OpticalPhysics would use QGSP_FTFP_BERT, G4RadioactiveDecayPhysics and G4OpticalPhysics"
+           << G4endl;
+    G4cerr << G4endl;
+    G4cerr << " To print all geant4 available physics modules and constructors use the -pap option " << G4endl << G4endl;
+}
 
 }
 
@@ -46,9 +47,8 @@ int main(int argc, char **argv) {
     G4String macro;
     G4String session;
     G4int nThreads = 0;
-    G4int verbosity = 0;
 
-    string physListString = "FTFP_BERT";
+    string physListString = "FTFP_BERT_EM0";
     bool printAvailablePhysics = false;
 
     for (G4int i = 1; i < argc; i = i + 2) {
@@ -58,9 +58,6 @@ int main(int argc, char **argv) {
         else if (g4argv == "-p") physListString = argv[i + 1];
         else if (g4argv == "-t") {
             nThreads = G4UIcommand::ConvertToInt(argv[i + 1]);
-        } else if (g4argv == "-v" || g4argv == "--verbose") {
-            ++verbosity;  // verbose flag doesn't take an argument
-            --i;  // this option is not followed with a parameter
         } else if (g4argv == "-pap" || g4argv == "--printAvailablePhysics") {
             printAvailablePhysics = true;
             --i;  // this option is not followed with a parameter
@@ -80,7 +77,7 @@ int main(int argc, char **argv) {
     }
 
     // Optionally: choose a different Random engine...
-    // G4Random::setTheEngine(new CLHEP::RanecuEngine);
+    G4Random::setTheEngine(new CLHEP::RanecuEngine);
 
     // Use G4SteppingVerboseWithUnits
     G4int precision = 4;
@@ -97,13 +94,12 @@ int main(int argc, char **argv) {
     }
 
     // Set mandatory initialization classes
-    auto detConstruction = new rga::DetectorConstruction();
-    runManager->SetUserInitialization(detConstruction);
+    runManager->SetUserInitialization(new rga::DetectorConstruction());
 
     auto gphysics = new GPhysics(printAvailablePhysics, physListString);
     runManager->SetUserInitialization(gphysics->getPhysList());
 
-    auto actionInitialization = new rga::ActionInitialization(detConstruction);
+    auto actionInitialization = new rga::ActionInitialization();
     runManager->SetUserInitialization(actionInitialization);
 
     // Initialize visualization
