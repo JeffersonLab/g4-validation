@@ -1,8 +1,7 @@
-
 #----------------------------------------------------------------------------
-# Setup the project
+# Setup the project. Notice for 11.3.0: need to copy lib/cmake/Geant4/Geant4PackageCache.cmake from previous release 11.2.0 to make this work
 #
-cmake_minimum_required(VERSION 3.16...3.30)
+cmake_minimum_required(VERSION 3.20)
 project(project_name)
 
 #----------------------------------------------------------------------------
@@ -23,6 +22,7 @@ endif ()
 # Assuming common headers and sources are 2 directories up
 include(${Geant4_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/../../include)
+
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
