@@ -30,6 +30,7 @@ G4bool Flux_SD::ProcessHits(G4Step *step, G4TouchableHistory *) {
     hit->setTime(time);
     hit->setParticleID(pid);
     hit->setMomentum(momentum);
+
     fHitsCollection->insert(hit);
 
     return true;

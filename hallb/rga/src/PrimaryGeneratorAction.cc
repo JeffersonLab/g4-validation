@@ -34,11 +34,11 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction() {
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 
-    G4int numberOfBeamElectrons = 100000;
+    G4int numberOfBeamElectrons = 1000;
 
     G4double beam_spot_size_x = 0.15 * mm;
     G4double beam_spot_size_y = 0.15 * mm;
-    G4double z0 = -3. * cm;
+    G4double z0 = -5. * cm;
 
     for (G4int i = 0; i < numberOfBeamElectrons; i++) {
 
