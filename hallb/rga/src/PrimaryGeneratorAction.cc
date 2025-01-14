@@ -1,4 +1,5 @@
 #include "PrimaryGeneratorAction.hh"
+#include "g4globals.hh"
 
 // geant4
 #include "G4ParticleGun.hh"
@@ -13,7 +14,6 @@ PrimaryGeneratorAction::PrimaryGeneratorAction()
           fParticleGun(0) {
 
     G4int n_particle = 1;
-    G4double beam_energy = 11. * GeV;
 
     fParticleGun = new G4ParticleGun(n_particle);
 
@@ -23,7 +23,7 @@ PrimaryGeneratorAction::PrimaryGeneratorAction()
     G4ParticleDefinition *particle = particleTable->FindParticle(particleName = "e-");
     fParticleGun->SetParticleDefinition(particle);
     fParticleGun->SetParticleMomentumDirection(G4ThreeVector(0., 0., 1.)); // beam along z axis
-    fParticleGun->SetParticleEnergy(beam_energy);
+    fParticleGun->SetParticleEnergy(g4_globals::beam_energy*GeV);
 
 }
 
@@ -34,7 +34,7 @@ PrimaryGeneratorAction::~PrimaryGeneratorAction() {
 
 void PrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent) {
 
-    G4int numberOfBeamElectrons = 1000;
+    G4int numberOfBeamElectrons = 1;
 
     G4double beam_spot_size_x = 0.15 * mm;
     G4double beam_spot_size_y = 0.15 * mm;

@@ -1,6 +1,8 @@
 // this test
 #include "EventAction.hh"
+#include "EventFilters.hh"
 #include "fluxHit.hh"
+#include "g4globals.hh"
 
 // geant4
 #include "G4AnalysisManager.hh"
@@ -18,9 +20,9 @@ EventAction::EventAction() {
 	G4RunManager::GetRunManager()->SetPrintProgress(1);
 }
 
-void EventAction::BeginOfEventAction(const G4Event *event) {
-
-}
+//void EventAction::BeginOfEventAction(const G4Event *event) {
+//
+//}
 
 void EventAction::EndOfEventAction(const G4Event *event) {
 
@@ -31,19 +33,21 @@ void EventAction::EndOfEventAction(const G4Event *event) {
 	if (!HCsThisEvent) return;
 
 	auto theOnlyHC = HCsThisEvent->GetHC(0);
+	auto eventFilter = new EventFilters(theOnlyHC, g4_globals::beam_energy, g4_globals::target_mass);
 
-	for (size_t hitIndex = 0; hitIndex < theOnlyHC->GetSize(); hitIndex++) {
+	if (eventFilter->inclusive_electron(1.0, 2.0)) {
+		for (size_t hitIndex = 0; hitIndex < theOnlyHC->GetSize(); hitIndex++) {
 
-		auto hit = static_cast<FluxHit *>(theOnlyHC->GetHit(hitIndex));
-		auto time = hit->getTime();
-		auto localPos = hit->getWorldPos();
-		auto pid = hit->getParticleID();
-		auto momentum = hit->getMomentum();
+			auto hit = static_cast<FluxHit *>(theOnlyHC->GetHit(hitIndex));
+			//auto time = hit->getTime();
+			auto localPos = hit->getWorldPos();
+			auto pid = hit->getParticleID();
+			auto momentum = hit->getMomentum();
 
-		// theta is the angle between the momentum vector and the z-axis
-		double theta =localPos.theta();
+			// theta is the angle between the momentum vector and the z-axis
+			double theta = localPos.theta();
 
-		if (theta / deg < 5.0) continue;
+			if (theta / deg < 5.0) continue;
 
 			analysisManager->FillNtupleDColumn(0, pid);
 
@@ -55,9 +59,10 @@ void EventAction::EndOfEventAction(const G4Event *event) {
 			analysisManager->FillNtupleDColumn(5, momentum.y());
 			analysisManager->FillNtupleDColumn(6, momentum.z());
 
-
-
+		}
 	}
+
+
 	analysisManager->AddNtupleRow();
 }
 
