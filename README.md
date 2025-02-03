@@ -6,6 +6,24 @@ rates / cross sections of what comes out.
 The various setups are meant to be Geant4 standalone tests, to be added later in geant4-validation 
 
 
+## Compilation
+
+### Notice for 11.3.0, affecting MacOs but not Linux:
+
+The file Geant4PackageCache.cmake is missing in the 11.3.0 installation, 
+but is present in the 11.2.2 installation. It is added to repository.  Copying it in $G4INSTALL/lib/cmake/Geant4/
+fixes cmake complications.
+
+
+To compile, create a build directory, run cmake then make. For example, for the **rga** experiment:
+
+```bash
+mkdir rga
+cmake <path to rga source>
+make -j8
+```
+
+
 ### Common sources for the geant4 extensible physics list
 
 The template use the common sources for the geant4 extensible physics list.
@@ -23,7 +41,5 @@ For example:
 
 To print all geant4 available physics modules and constructors use the -pap option
 
-Sources:
+Common Sources are in the root include and src directories.
 
-- include/extPhysics.hh
-- src/extPhysics.cc

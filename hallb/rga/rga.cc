@@ -24,7 +24,7 @@ void PrintUsage() {
 	G4cerr << " Usage: " << G4endl;
 	G4cerr << G4endl;
 	G4cerr
-			<< "  rga [-b batch_macro ] [-u UIsession ] [-t nThreads] [-p physList ] [-h | --help] "
+			<< "  rga [-n number of events] [-m macro ] [-u UIsession ] [-t nThreads] [-p physList ] [-h | --help] "
 			<< "[ -pap | --printAvailablePhysics ] [-beam beam_eneregy] [-target target_mass]"
 			<< G4endl;
 	G4cerr << G4endl;
@@ -43,7 +43,7 @@ void PrintUsage() {
 			<< G4endl << G4endl;
 	G4cerr << " The beam energy and target mass can be set with the -beam and -target options. "
 		   << "Both options are in GeV" << G4endl;
-	G4cerr << " To print all geant4 available physics modules and constructors use the -pap option "
+	G4cerr << " To print all Geant4 available physics modules and constructors use the -pap option "
 		   << G4endl << G4endl;
 }
 
@@ -52,16 +52,18 @@ void PrintUsage() {
 
 int main(int argc, char **argv) {
 
-	G4String macro;
 	G4String session;
+	G4String macro;
 	G4int nThreads = 0;
+	G4int nEvents = 0;
 
-	string physListString = "FTFP_BERT_EM0";
+	string physListString = "FTFP_BERT";
 	bool printAvailablePhysics = false;
 
 	for (G4int i = 1; i < argc; i = i + 2) {
 		G4String g4argv(argv[i]);
-		if (g4argv == "-m") macro = argv[i + 1];
+		if (g4argv == "-n") nEvents = G4UIcommand::ConvertToInt(argv[i + 1]);
+		else if (g4argv == "-m") macro = argv[i + 1];
 		else if (g4argv == "-u") session = argv[i + 1];
 		else if (g4argv == "-p") physListString = argv[i + 1];
 		else if (g4argv == "-t") {
@@ -82,9 +84,20 @@ int main(int argc, char **argv) {
 		}
 	}
 
+
+	// if beam is not set, use 11 GeV
+	if (g4_globals::beam_energy == 0) {
+		g4_globals::beam_energy = 11.0;
+	}
+
+	// if target is not set, use 0.938 GeV
+	if (g4_globals::target_mass == 0) {
+		g4_globals::target_mass = 0.938;
+	}
+
 	// print all used options
 	cout << "Using options: " << endl;
-	cout << "  macro: " << macro << endl;
+	cout << "  number of events:: " << nEvents << endl;
 	cout << "  session: " << session << endl;
 	cout << "  nThreads: " << nThreads << endl;
 	cout << "  physList: " << physListString << endl;
@@ -134,17 +147,30 @@ int main(int argc, char **argv) {
 	auto UImanager = G4UImanager::GetUIpointer();
 
 	// Process macro or start UI session
-	if (macro.size()) {
-		// batch mode
-		G4String command = "/control/execute ";
-		UImanager->ApplyCommand(command + macro);
+	// if nEvents > 0 then run in batch mode
+	if (nEvents  > 0 ) {
+		UImanager->ApplyCommand("/run/initialize");
+		UImanager->ApplyCommand("/run/printProgress 500");
+		UImanager->ApplyCommand("/tracking/verbose 0");
+		UImanager->ApplyCommand("/vis/verbose errors");
+
+		G4String command = "/run/beamOn " + std::to_string(nEvents);
+		UImanager->ApplyCommand(command);
+
 	} else {
-		// interactive mode : define UI session
-		// assuming the existence of init_vis and gui
-		UImanager->ApplyCommand("/control/execute init_vis.mac");
-		ui->SessionStart();
-		delete ui;
+		if (macro.size()) {
+			// batch mode
+			G4String command = "/control/execute ";
+			UImanager->ApplyCommand(command + macro);
+		} else {
+			// interactive mode : define UI session
+			// assuming the existence of init_vis and gui
+			UImanager->ApplyCommand("/control/execute init_vis.mac");
+			ui->SessionStart();
+			delete ui;
+		}
 	}
+
 
 	delete visManager;
 	delete runManager;

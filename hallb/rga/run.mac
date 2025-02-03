@@ -1,7 +1,0 @@
-/run/initialize
-#
-# Run Default kinematics, print log every n events
-/run/printProgress 100
-/run/beamOn 2
-/tracking/verbose 2
-/vis/verbose errors

@@ -2,21 +2,20 @@
 #define EventFilters_h 1
 
 #include "V4.h"
-#include "G4VHitsCollection.hh"
+#include "fluxHit.hh"
 
 
 class EventFilters {
 
 public:
-	EventFilters(G4VHitsCollection *hitsCollection, double beam_e, double target_mass);
+	EventFilters(double beam_e, double target_mass);
 
 	~EventFilters() = default;
 
-    bool inclusive_electron(double minW, double maxW);
+	// return W if it passes the filter, 0 otherwise
+    double inclusive_electron(FluxHit *hit);
 
 private:
-
-	G4VHitsCollection *hc;
 
 	// 4 vectors
 	V4 beam;   // Incident Electron
@@ -24,6 +23,11 @@ private:
 	V4 q;      // virtual photon
 	V4 H;      // Outgoing Hadrons
 
+
+	// inclusive electron filter variables
+	double minTheta=2.0 ; // in degrees
+	double minW=0.5;      // in GeV
+	double maxW=4.0;      // in GeV
 
 };
 

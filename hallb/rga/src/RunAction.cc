@@ -34,7 +34,11 @@ RunAction::RunAction(EventAction *eventAction)
 
     G4cout << "Using " << analysisManager->GetType() << " analysisManager type " << G4endl;
 
-    // Book ntuple
+	// Book W histograms
+	analysisManager->CreateH1("W", "W", 100, 0., 4);  // h1 Id = 0
+
+
+	// Book ntuple
     if (fEventAction) {
         analysisManager->CreateNtuple("rga", "rga physics validation");
         analysisManager->CreateNtupleDColumn("pid");
