@@ -10,7 +10,7 @@ namespace rga {
 
 void ActionInitialization::BuildForMaster() const {
     auto eventAction = new EventAction;
-    SetUserAction(new RunAction(eventAction));
+    SetUserAction(new RunAction(eventAction, output_file));
 }
 
 void ActionInitialization::Build() const {
@@ -19,7 +19,7 @@ void ActionInitialization::Build() const {
     auto eventAction = new EventAction;
     SetUserAction(eventAction);
 
-    SetUserAction(new RunAction(eventAction));
+    SetUserAction(new RunAction(eventAction, output_file));
 
     SetUserAction(new SteppingAction());
 }

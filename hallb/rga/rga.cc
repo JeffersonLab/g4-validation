@@ -25,7 +25,7 @@ void PrintUsage() {
 	G4cerr << G4endl;
 	G4cerr
 			<< "  rga [-n number of events] [-m macro ] [-u UIsession ] [-t nThreads] [-p physList ] [-h | --help] "
-			<< "[ -pap | --printAvailablePhysics ] [-beam beam_eneregy] [-target target_mass]"
+			<< "[ -pap | --printAvailablePhysics ] [-beam beam_eneregy] [-target target_mass] [-o output file] "
 			<< G4endl;
 	G4cerr << G4endl;
 	G4cerr << "  > The default number of threads is equal to the number of available CPU cores. " << G4endl;
@@ -56,6 +56,7 @@ int main(int argc, char **argv) {
 	G4String macro;
 	G4int nThreads = 0;
 	G4int nEvents = 0;
+	G4String output_file = "rga.root";
 
 	string physListString = "FTFP_BERT";
 	bool printAvailablePhysics = false;
@@ -66,6 +67,7 @@ int main(int argc, char **argv) {
 		else if (g4argv == "-m") macro = argv[i + 1];
 		else if (g4argv == "-u") session = argv[i + 1];
 		else if (g4argv == "-p") physListString = argv[i + 1];
+		else if (g4argv == "-o") output_file = argv[i + 1];
 		else if (g4argv == "-t") {
 			nThreads = G4UIcommand::ConvertToInt(argv[i + 1]);
 		} else if (g4argv == "-pap" || g4argv == "--printAvailablePhysics") {
@@ -103,6 +105,7 @@ int main(int argc, char **argv) {
 	cout << "  physList: " << physListString << endl;
 	cout << "  beam energy: " << g4_globals::beam_energy << " GeV" << endl;
 	cout << "  target mass: " << g4_globals::target_mass << " GeV" << endl;
+	cout << "  output file: " << output_file << endl;
 
 
 	// Detect interactive mode (if no macro provided) and define UI session
@@ -134,7 +137,7 @@ int main(int argc, char **argv) {
 	auto gphysics = new GPhysics(printAvailablePhysics, physListString);
 	runManager->SetUserInitialization(gphysics->getPhysList());
 
-	auto actionInitialization = new rga::ActionInitialization();
+	auto actionInitialization = new rga::ActionInitialization(output_file);
 	runManager->SetUserInitialization(actionInitialization);
 
 	// Initialize visualization

@@ -6,12 +6,13 @@
 
 // geant4
 #include "G4UserRunAction.hh"
+#include "G4String.hh"
 
 namespace rga {
 
 class RunAction : public G4UserRunAction {
 public:
-    RunAction(EventAction *eventAction);
+    RunAction(EventAction *eventAction, G4String of);
 
     ~RunAction() override = default;
 
@@ -21,6 +22,7 @@ public:
 
 private:
     EventAction *fEventAction = nullptr;
+	G4String output_file;
 
 };
 
