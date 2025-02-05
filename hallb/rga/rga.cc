@@ -52,7 +52,7 @@ void PrintUsage() {
 
 int main(int argc, char **argv) {
 
-	G4String session;
+	G4String session = "tcsh";
 	G4String macro;
 	G4int nThreads = 0;
 	G4int nEvents = 0;
@@ -139,16 +139,9 @@ int main(int argc, char **argv) {
 	auto actionInitialization = new rga::ActionInitialization(output_file);
 	runManager->SetUserInitialization(actionInitialization);
 
-	// Initialize visualization
-	auto visManager = new G4VisExecutive;
-	// G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
-	// G4VisManager* visManager = new G4VisExecutive("Quiet");
-	visManager->Initialize();
-
 	// Get the pointer to the User Interface manager
 	auto UImanager = G4UImanager::GetUIpointer();
 
-	// Process macro or start UI session
 	// if nEvents > 0 then run in batch mode
 	if (nEvents  > 0 ) {
 		UImanager->ApplyCommand("/run/initialize");
@@ -160,6 +153,11 @@ int main(int argc, char **argv) {
 		UImanager->ApplyCommand(command);
 
 	} else {
+		// G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
+		auto visManager = new G4VisExecutive;
+		// G4VisManager* visManager = new G4VisExecutive("Quiet");
+		visManager->Initialize();
+
 		if (macro.size()) {
 			// batch mode
 			G4String command = "/control/execute ";
@@ -171,9 +169,9 @@ int main(int argc, char **argv) {
 			ui->SessionStart();
 			delete ui;
 		}
+
+		delete visManager;
 	}
-
-
-	delete visManager;
 	delete runManager;
+
 }
