@@ -98,14 +98,13 @@ int main(int argc, char **argv) {
 	}
 
 	// print all used options
-	cout << "Using options: " << endl;
-	cout << "  number of events:: " << nEvents << endl;
-	cout << "  session: " << session << endl;
-	cout << "  nThreads: " << nThreads << endl;
-	cout << "  physList: " << physListString << endl;
-	cout << "  beam energy: " << g4_globals::beam_energy << " GeV" << endl;
-	cout << "  target mass: " << g4_globals::target_mass << " GeV" << endl;
-	cout << "  output file: " << output_file << endl;
+	cout << " > rga executable - using options: " << endl;
+	cout << "   - Number of events:: " << nEvents << endl;
+	cout << "   - Number of threads: " << nThreads << endl;
+	cout << "   - Physics List: " << physListString << endl;
+	cout << "   - Beam Energy: " << g4_globals::beam_energy << " GeV" << endl;
+	cout << "   - Target mass: " << g4_globals::target_mass << " GeV" << endl;
+	cout << "   - Output file: " << output_file << endl;
 
 
 	// Detect interactive mode (if no macro provided) and define UI session
