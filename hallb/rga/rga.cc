@@ -24,7 +24,7 @@ void PrintUsage() {
 	G4cerr << " Usage: " << G4endl;
 	G4cerr << G4endl;
 	G4cerr
-			<< "  rga [-n number of events] [-m macro ] [-u UIsession ] [-t nThreads] [-p physList ] [-h | --help] "
+			<< "  rga [-n number of events] [-m batch macro ] [-u UIsession ] [-t nThreads] [-p physList ] [-h | --help] "
 			<< "[ -pap | --printAvailablePhysics ] [-beam beam_eneregy] [-target target_mass] [-o output file] "
 			<< G4endl;
 	G4cerr << G4endl;
@@ -86,7 +86,6 @@ int main(int argc, char **argv) {
 		}
 	}
 
-
 	// if beam is not set, use 11 GeV
 	if (g4_globals::beam_energy == 0) {
 		g4_globals::beam_energy = 11.0;
@@ -110,7 +109,8 @@ int main(int argc, char **argv) {
 	// Detect interactive mode (if no macro provided) and define UI session
 	G4UIExecutive *ui = nullptr;
 	if (!macro.size()) {
-		ui = new G4UIExecutive(argc, argv, session);
+		// the version with additional argument does not seem to work
+		ui = new G4UIExecutive(argc, argv);
 	}
 
 	// Optionally: choose a different Random engine...
@@ -119,7 +119,6 @@ int main(int argc, char **argv) {
 	// Use G4SteppingVerboseWithUnits
 	G4int precision = 4;
 	G4SteppingVerbose::UseBestUnit(precision);
-
 
 	// Construct the default run manager
 	auto runManager = G4RunManagerFactory::CreateRunManager(G4RunManagerType::Default);
@@ -142,6 +141,7 @@ int main(int argc, char **argv) {
 	// Get the pointer to the User Interface manager
 	auto UImanager = G4UImanager::GetUIpointer();
 
+
 	// if nEvents > 0 then run in batch mode
 	if (nEvents  > 0 ) {
 		UImanager->ApplyCommand("/run/initialize");
@@ -163,7 +163,6 @@ int main(int argc, char **argv) {
 			G4String command = "/control/execute ";
 			UImanager->ApplyCommand(command + macro);
 		} else {
-			// interactive mode : define UI session
 			// assuming the existence of init_vis and gui
 			UImanager->ApplyCommand("/control/execute init_vis.mac");
 			ui->SessionStart();

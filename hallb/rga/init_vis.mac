@@ -1,5 +1,4 @@
-# Macro executed by default
-# Notice: 'make' must be executed to copy this file to the build directory.
+# Macro executed by default unless we're in batch mode.
 #
 # Set some default verbose
 #

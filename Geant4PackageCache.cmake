@@ -13,34 +13,7 @@ macro(geant4_set_and_check_package_variable _name _value _type _docstring)
     endif()
 endmacro()
 
-
-# CLHEP Build Time Settings
-geant4_set_and_check_package_variable(CLHEP_DIR "/opt/projects/ceInstall/macosx15-clang16/clhep/2.4.7.1/lib/CLHEP-2.4.7.1" PATH "The directory containing a CMake configuration file for CLHEP.")
-
-# EXPAT Build Time Settings
-geant4_set_and_check_package_variable(EXPAT_INCLUDE_DIR "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/include" PATH "Path to a file.")
-geant4_set_and_check_package_variable(EXPAT_LIBRARY "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib/libexpat.tbd" PATH "no documentation, not a cache value")
-geant4_set_and_check_package_variable(EXPAT_LIBRARY_RELEASE "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/usr/lib/libexpat.tbd" FILEPATH "Path to a library.")
-
-# TBB Build Time Settings
-
 # XercesC Build Time Settings
 geant4_set_and_check_package_variable(XercesC_INCLUDE_DIR "/opt/projects/ceInstall/macosx15-clang16/xercesc/3.2.5/include" PATH "Xerces-C++ include directory")
 geant4_set_and_check_package_variable(XercesC_LIBRARY_RELEASE "/opt/projects/ceInstall/macosx15-clang16/xercesc/3.2.5/lib/libxerces-c.dylib" FILEPATH "Xerces-C++ libraries (release)")
-
-# Qt5 Build Time Settings
-geant4_set_and_check_package_variable(Qt5_DIR "/opt/projects/ceInstall/macosx15-clang16/qt/system/clang_64/lib/cmake/Qt5" PATH "The directory containing a CMake configuration file for Qt5.")
-geant4_set_and_check_package_variable(Qt5Core_DIR "/opt/projects/ceInstall/macosx15-clang16/qt/system/clang_64/lib/cmake/Qt5Core" PATH "The directory containing a CMake configuration file for Qt5Core.")
-geant4_set_and_check_package_variable(Qt5Gui_DIR "/opt/projects/ceInstall/macosx15-clang16/qt/system/clang_64/lib/cmake/Qt5Gui" PATH "The directory containing a CMake configuration file for Qt5Gui.")
-geant4_set_and_check_package_variable(Qt5Widgets_DIR "/opt/projects/ceInstall/macosx15-clang16/qt/system/clang_64/lib/cmake/Qt5Widgets" PATH "The directory containing a CMake configuration file for Qt5Widgets.")
-geant4_set_and_check_package_variable(Qt5OpenGL_DIR "/opt/projects/ceInstall/macosx15-clang16/qt/system/clang_64/lib/cmake/Qt5OpenGL" PATH "The directory containing a CMake configuration file for Qt5OpenGL.")
-geant4_set_and_check_package_variable(Qt53DCore_DIR "/opt/projects/ceInstall/macosx15-clang16/qt/system/clang_64/lib/cmake/Qt53DCore" PATH "The directory containing a CMake configuration file for Qt53DCore.")
-geant4_set_and_check_package_variable(Qt53DExtras_DIR "/opt/projects/ceInstall/macosx15-clang16/qt/system/clang_64/lib/cmake/Qt53DExtras" PATH "The directory containing a CMake configuration file for Qt53DExtras.")
-geant4_set_and_check_package_variable(Qt53DRender_DIR "/opt/projects/ceInstall/macosx15-clang16/qt/system/clang_64/lib/cmake/Qt53DRender" PATH "The directory containing a CMake configuration file for Qt53DRender.")
-
-# OpenGL Build Time Settings
-geant4_set_and_check_package_variable(OPENGL_INCLUDE_DIR "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework" PATH "Include for OpenGL")
-geant4_set_and_check_package_variable(OPENGL_gl_LIBRARY "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.2.sdk/System/Library/Frameworks/OpenGL.framework" FILEPATH "OpenGL GL library")
-
-
 

@@ -11,8 +11,12 @@ The various setups are meant to be Geant4 standalone tests, to be added later in
 ### Notice for 11.3.0, affecting MacOs but not Linux:
 
 The file Geant4PackageCache.cmake is missing in the 11.3.0 installation, 
-but is present in the 11.2.2 installation. It is added to repository.  Copying it in $G4INSTALL/lib/cmake/Geant4/
-fixes cmake complications.
+but is present in the 11.2.2 installation. It is added to repository.  
+Copying it in $G4INSTALL/lib/cmake/Geant4/  fixes cmake complications:
+
+```bash
+cp Geant4PackageCache.cmake $G4INSTALL/lib/cmake/Geant4/
+```
 
 
 To compile, create a build directory, run cmake then make. For example, for the **rga** experiment:

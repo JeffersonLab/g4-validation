@@ -67,7 +67,7 @@ The scoring is done with the sensitive detector volume, following the B5 example
 
 ### - Batch mode:
 
-`./rga -m run.mac`
+
 
 
 

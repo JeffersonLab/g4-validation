@@ -1,26 +1,16 @@
 #----------------------------------------------------------------------------
-# Setup the project. Notice for 11.3.0: need to copy lib/cmake/Geant4/Geant4PackageCache.cmake from previous release 11.2.0 to make this work
+# Setup the project.
 #
-cmake_minimum_required(VERSION 3.20)
-project(project_name)
+cmake_minimum_required(VERSION 3.16...3.27)
+project(rga)
 
-#----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
-# You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
-# to build a batch mode only executable
-#
-option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
-if (WITH_GEANT4_UIVIS)
-    find_package(Geant4 REQUIRED ui_all vis_all)
-else ()
-    find_package(Geant4 REQUIRED)
-endif ()
+find_package(Geant4 REQUIRED ui_all vis_all)
 
 #----------------------------------------------------------------------------
 # Setup Geant4 include directories and compile definitions
 # Setup include directory for this project
 # Assuming common headers and sources are 2 directories up
-include(${Geant4_USE_FILE})
 include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/../../include)
 
 
@@ -35,7 +25,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${PROJECT_SOURCE_DIR}/../..
 # Add the executable, and link it to the Geant4 libraries
 #
 add_executable(rga rga.cc ${sources} ${headers})
-target_link_libraries(rga ${Geant4_LIBRARIES})
+target_link_libraries(rga PRIVATE ${Geant4_LIBRARIES})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -57,24 +47,11 @@ foreach (_script ${FILES_TO_COPY})
     )
 endforeach ()
 
-# for some reason this is not added to the cflags
-# but in the examples it it. Investigate more.
-set(G4CONFIG "$ENV{G4INSTALL}/bin/geant4-config")
-execute_process(
-        COMMAND ${G4CONFIG} --cflags
-        OUTPUT_VARIABLE G4CFLAGS
-)
-string(STRIP ${G4CFLAGS} G4CFLAGS)
-set(CMAKE_CXX_FLAGS " ${G4CFLAGS} ${CMAKE_CXX_FLAGS}")
 
 #----------------------------------------------------------------------------
-# Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
-#
-message(STATUS "")
-message(STATUS "CMAKE_BUILD_TYPE: " ${CMAKE_BUILD_TYPE})
-message(STATUS "CMAKE_CXX_FLAGS: " ${CMAKE_CXX_FLAGS})
 message(STATUS "C++ compiler: ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}")
-message(STATUS "")
-
-
-install(TARGETS rga DESTINATION bin)
+message(STATUS "Geant4 include dirs: ${Geant4_INCLUDE_DIRS}")
+message(STATUS "Geant4 libraries: ${Geant4_LIBRARIES}")
+message(STATUS "Geant4 definitions: ${Geant4_DEFINITIONS}")
+message(STATUS "Geant4 use file: ${Geant4_USE_FILE}")
+message(STATUS "Qt6_DIR: $ENV{Qt6_DIR}")
