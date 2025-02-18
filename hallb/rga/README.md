@@ -35,7 +35,8 @@ With 4 cores (modify accordingly), using rga as the build directory:
 - mkdir rga
 - cd rga
 - cmake \<path to geant4 rga source code\>
-- make -j4
+- make -j8
+- add -DCMAKE_VERBOSE_MAKEFILE=ON to the cmake command for compilation verbosity
 
 
 ## Physics List
