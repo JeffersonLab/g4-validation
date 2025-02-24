@@ -14,6 +14,8 @@
 #include "G4UIcommand.hh"
 #include "G4VisExecutive.hh"
 
+#include <unistd.h>  // needed for get_pid
+
 using namespace std;
 
 namespace rga {
@@ -26,6 +28,7 @@ void PrintUsage() {
 	G4cerr
 			<< "  rga [-n number of events] [-m batch macro ] [-u UIsession ] [-t nThreads] [-p physList ] [-h | --help] "
 			<< "[ -pap | --printAvailablePhysics ] [-beam beam_eneregy] [-target target_mass] [-o output file] "
+			<< "[ -seed #] "
 			<< G4endl;
 	G4cerr << G4endl;
 	G4cerr << "  > The default number of threads is equal to the number of available CPU cores. " << G4endl;
@@ -43,6 +46,8 @@ void PrintUsage() {
 			<< G4endl << G4endl;
 	G4cerr << " The beam energy and target mass can be set with the -beam and -target options. "
 		   << "Both options are in GeV" << G4endl;
+	G4cerr << " The seeds initialize the random engine. Set to 0 to use CPU clock and process ID. "
+		   << G4endl;
 	G4cerr << " To print all Geant4 available physics modules and constructors use the -pap option "
 		   << G4endl << G4endl;
 }
@@ -57,6 +62,7 @@ int main(int argc, char **argv) {
 	G4int nThreads = 0;
 	G4int nEvents = 0;
 	G4String output_file = "rga.root";
+	G4int seed = 0;
 
 	string physListString = "FTFP_BERT";
 	bool printAvailablePhysics = false;
@@ -68,6 +74,7 @@ int main(int argc, char **argv) {
 		else if (g4argv == "-u") session = argv[i + 1];
 		else if (g4argv == "-p") physListString = argv[i + 1];
 		else if (g4argv == "-o") output_file = argv[i + 1];
+		else if (g4argv == "-seed") seed = G4UIcommand::ConvertToInt(argv[i + 1]);
 		else if (g4argv == "-t") {
 			nThreads = G4UIcommand::ConvertToInt(argv[i + 1]);
 		} else if (g4argv == "-pap" || g4argv == "--printAvailablePhysics") {
@@ -84,6 +91,13 @@ int main(int argc, char **argv) {
 			rga::PrintUsage();
 			return 1;
 		}
+	}
+
+	if (seed == 0) {
+		double timed = time(NULL);
+		double clockd = clock();
+		double getpidi = (double) getpid();
+		seed = (G4int)(timed - clockd - getpidi);
 	}
 
 	// if beam is not set, use 11 GeV
@@ -115,6 +129,7 @@ int main(int argc, char **argv) {
 
 	// Optionally: choose a different Random engine...
 	G4Random::setTheEngine(new CLHEP::RanecuEngine);
+	G4Random::setTheSeed(seed);
 
 	// Use G4SteppingVerboseWithUnits
 	G4int precision = 4;
