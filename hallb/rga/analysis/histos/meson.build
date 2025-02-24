@@ -3,6 +3,7 @@ LD += {
     'name' : sub_dir_name,
     'sources' : files(
         'histos.cc',
+        'show_W.cc',
     ),
     'headers' : files(
         'histos.h',

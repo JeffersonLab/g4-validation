@@ -19,5 +19,5 @@ root  'rga_analysis.C("/opt/data/rga", true)'
 ### Batch and print all plots:
 
 ```
-root -l -q 'rga_analysis.C(/opt/data/rga", true)'
+root -l -q 'rga_analysis.C("/opt/data/rga", true)'
 ```

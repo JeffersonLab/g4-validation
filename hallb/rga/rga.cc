@@ -118,7 +118,7 @@ int main(int argc, char **argv) {
 	cout << "   - Beam Energy: " << g4_globals::beam_energy << " GeV" << endl;
 	cout << "   - Target mass: " << g4_globals::target_mass << " GeV" << endl;
 	cout << "   - Output file: " << output_file << endl;
-
+	cout << "   - Seed: " << seed << endl;
 
 	// Detect interactive mode (if no macro provided) and define UI session
 	G4UIExecutive *ui = nullptr;
