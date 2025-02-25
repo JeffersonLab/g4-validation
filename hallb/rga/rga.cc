@@ -121,11 +121,7 @@ int main(int argc, char **argv) {
 	cout << "   - Seed: " << seed << endl;
 
 	// Detect interactive mode (if no macro provided) and define UI session
-	G4UIExecutive *ui = nullptr;
-	if (!macro.size()) {
-		// the version with additional argument does not seem to work
-		ui = new G4UIExecutive(argc, argv);
-	}
+
 
 	// Optionally: choose a different Random engine...
 	G4Random::setTheEngine(new CLHEP::RanecuEngine);
@@ -156,13 +152,11 @@ int main(int argc, char **argv) {
 	// Get the pointer to the User Interface manager
 	auto UImanager = G4UImanager::GetUIpointer();
 
-
 	// if nEvents > 0 then run in batch mode
-	if (nEvents  > 0 ) {
+	if (nEvents > 0) {
 		UImanager->ApplyCommand("/run/initialize");
 		UImanager->ApplyCommand("/run/printProgress 500");
 		UImanager->ApplyCommand("/tracking/verbose 0");
-		UImanager->ApplyCommand("/vis/verbose errors");
 
 		G4String command = "/run/beamOn " + std::to_string(nEvents);
 		UImanager->ApplyCommand(command);
@@ -172,12 +166,16 @@ int main(int argc, char **argv) {
 		auto visManager = new G4VisExecutive;
 		// G4VisManager* visManager = new G4VisExecutive("Quiet");
 		visManager->Initialize();
+		UImanager->ApplyCommand("/vis/verbose errors");
 
 		if (macro.size()) {
 			// batch mode
 			G4String command = "/control/execute ";
 			UImanager->ApplyCommand(command + macro);
 		} else {
+
+			G4UIExecutive *ui = new G4UIExecutive(argc, argv);
+
 			// assuming the existence of init_vis and gui
 			UImanager->ApplyCommand("/control/execute init_vis.mac");
 			ui->SessionStart();
