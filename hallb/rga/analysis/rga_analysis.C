@@ -7,7 +7,7 @@ GHistos *histos = nullptr;
 
 void rga_analysis(string path, bool printa = false) {
 
-	histos = new GHistos(path);
+histos = new GHistos(path);
 
 	TControlBar *bar = new TControlBar("vertical", "Mauri Background Analysis", 1800, 30);
 	bar->AddButton("RGA Inclusive Analysis", "");

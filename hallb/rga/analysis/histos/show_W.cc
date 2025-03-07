@@ -12,7 +12,7 @@ using namespace std;
 void GHistos::show_W() {
 
 	// general label
-	TLatex glab;
+TLatex glab;
 	glab.SetTextColor(kBlue + 3);
 	glab.SetNDC(1);
 
@@ -39,7 +39,7 @@ void GHistos::show_W() {
 
 	for (int m = 0; m < NCONFS; m++) {
 		glab.SetTextColor(models_color[m]);
-		glab.DrawLatex(0.65, 0.85 - m*0.05, Form("Model %s ", configurations[m].c_str()));
+		glab.DrawLatex(0.65, 0.85 - m * 0.05, Form("Model %s ", configurations[m].c_str()));
 	}
 
 	if (PRINT != "none") {
