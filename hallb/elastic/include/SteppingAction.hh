@@ -18,9 +18,9 @@ public:
 
 private:
 
-    double max_x_pos = 110;
-    double max_y_pos = 110;
-    double max_z_pos = 110;
+    double max_x_pos = 200;
+    double max_y_pos = 200;
+    double max_z_pos = 200;
 
 };
 
